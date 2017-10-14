@@ -1,0 +1,36 @@
+pkgname=firmware-motorola-titan
+pkgver=1
+pkgrel=0
+pkgdesc="Motorola Titan Firmware"
+url="https://github.com/LineageOS/android_device_motorola_msm8226-common"
+arch="noarch"
+license="proprietary"
+depends=""
+makedepends=""
+install=""
+subpackages=""
+source="$url/raw/cm-14.1/wifi/WCNSS_cfg.dat"
+
+options="!check !strip !archcheck"
+
+_files1="wcnss.b00 wcnss.b01 wcnss.b02 wcnss.b04 wcnss.b06 wcnss.b07 wcnss.b08 wcnss.b09 wcnss.mdt"
+_files2="WCNSS_qcom_cfg.ini"
+_files3="WCNSS_qcom_wlan_factory_nv.bin WCNSS_qcom_wlan_nv.bin"
+
+package() {
+	fwdir1="$pkgdir/lib/firmware/postmarketos"
+	fwdir2="$pkgdir/lib/firmware/postmarketos/wlan/prima"
+	datadir1="/mnt/firmware/image"
+	datadir2="/mnt/data/misc/wifi"
+	datadir3="/mnt/persist"
+
+	mkdir -p "$fwdir2"
+
+	for _f in $_files1; do ln -sf "$datadir1/$_f" "$fwdir1"; done
+	for _f in $_files2; do ln -sf "$datadir2/$_f" "$fwdir2"; done
+	for _f in $_files3; do ln -sf "$datadir3/$_f" "$fwdir2"; done
+
+	install -m644 "$srcdir/WCNSS_cfg.dat" "$fwdir2"
+}
+
+sha512sums="fb92214f928143228c0683934342ceff11f19bec0581684e98e155262bed03f51c21a21881ec03316f917c127b607a2943efea4847b908f1c02864a1e507fb50  WCNSS_cfg.dat"
