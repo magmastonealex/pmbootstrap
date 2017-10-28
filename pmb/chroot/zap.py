@@ -24,7 +24,8 @@ import pmb.chroot
 import pmb.helpers.run
 
 
-def zap(args, confirm=True, packages=False, http=False, mismatch_bins=False, distfiles=False):
+def zap(args, confirm=True, packages=False, http=False, mismatch_bins=False,
+        old_bins=False, distfiles=False):
     """
     Shutdown everything inside the chroots (e.g. distccd, adb), umount
     everything and then safely remove folders from the work-directory.
@@ -33,11 +34,26 @@ def zap(args, confirm=True, packages=False, http=False, mismatch_bins=False, dis
     :arg http: Clear the http cache (used e.g. for the initial apk download)
     :arg mismatch_bins: Remove the packages, that have a different version
                         compared to what is in the abuilds folder.
+    :arg old_bins: Clean out older versions of packages from all chroots
     :arg distfiles: Clear the downloaded files cache
 
     NOTE: This function gets called in pmb/config/init.py, with only args.work
     and args.device set!
     """
+
+    # Delete packages with a different version compared to aports, then re-index
+    if mismatch_bins and os.path.exists(args.work + "/packages/"):
+        binaries(args)
+        pmb.build.other.index_repo(args)
+
+    # Delete old packages
+    if old_bins:
+        pmb.chroot.root(args, ["apk", "-v", "cache", "clean"])
+        arch_native = pmb.parse.arch.alpine_native()
+        for arch in pmb.config.build_device_architectures:
+            if arch != arch_native:
+                pmb.chroot.root(args, ["apk", "-v", "cache", "clean"], "buildroot_" + arch)
+
     pmb.chroot.shutdown(args)
 
     # Deletion patterns for folders inside args.work
@@ -60,11 +76,6 @@ def zap(args, confirm=True, packages=False, http=False, mismatch_bins=False, dis
         for match in matches:
             if not confirm or pmb.helpers.cli.confirm(args, "Remove " + match + "?"):
                 pmb.helpers.run.root(args, ["rm", "-rf", match])
-
-    # Delete packages with a different version compared to aports, then re-index
-    if mismatch_bins and os.path.exists(args.work + "/packages/"):
-        binaries(args)
-        pmb.build.other.index_repo(args)
 
 
 def binaries(args):
