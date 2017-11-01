@@ -1,0 +1,35 @@
+pkgname=firmware-samsung-maguro
+pkgver=1
+pkgrel=0
+pkgdesc="Google Galaxy Nexus (GSM) Firmware"
+url="https://github.com/postmarketOS"
+arch="noarch"
+license="proprietary"
+
+# Source
+_bcmdhd_cal_url="https://github.com/LineageOS/android_device_samsung_tuna"
+_bcmdhd_cal_commit="1b5aede175101b44c58d296c833efda46e1b86de"
+
+_linux_firmware_mirror="https://nl.alpinelinux.org/alpine/edge/main/armhf"
+_linux_firmware_pkgver="20170711"
+_linux_firmware_pkgrel="1"
+_linux_firmware_file="lib/firmware/brcm/brcmfmac4330-sdio.bin"
+
+source="
+	$pkgname-$_bcmdhd_cal_commit-bcmdhd.cal::${_bcmdhd_cal_url}/raw/${_bcmdhd_cal_commit}/bcmdhd.cal
+	${_linux_firmware_mirror}/linux-firmware-${_linux_firmware_pkgver}-r${_linux_firmware_pkgrel}.apk
+"
+options="!check !strip"
+
+package() {
+	cd $srcdir
+	tar -xf linux-firmware-${_linux_firmware_pkgver}-r${_linux_firmware_pkgrel}.apk
+	
+	install -Dm644 "$srcdir/$_linux_firmware_file" \
+		"$pkgdir/lib/firmware/postmarketos/brcmfmac4330-sdio.bin"
+	install -Dm644 "$srcdir/$pkgname-$_bcmdhd_cal_commit-bcmdhd.cal" \
+		"$pkgdir/lib/firmware/postmarketos/bcmdhd.cal"
+}
+
+sha512sums="64ba565246847cd4296713e554a37d5f2238c7d3b3545612de3ae00073364fc2c8c610cdd3291254526555658f464351a9c08ed8cbe1a733a8e0665bbab98094  firmware-samsung-maguro-1b5aede175101b44c58d296c833efda46e1b86de-bcmdhd.cal
+44af372d1f17d24699eda58b93c3fd525b506f05039941e6df09f57d59ac94fd5863439c48e329573ee385d092f5bb0c68003784cc7194c84f49c4f2e087484b  linux-firmware-20170711-r1.apk"
