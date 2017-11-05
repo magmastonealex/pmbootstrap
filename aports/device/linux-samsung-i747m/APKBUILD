@@ -7,7 +7,7 @@
 # - All simply to allow it to compile under GCC6.
 
 pkgname="linux-samsung-i747m"
-pkgver=3.x.x
+pkgver=3.4.112
 pkgrel=0
 pkgdesc="Samsung Galaxy SIII (USA/Canada) kernel fork"
 arch="armhf"
