@@ -6,7 +6,7 @@ url="https://postmarketos.org"
 license="MIT"
 arch="noarch"
 options="!check"
-depends="linux-samsung-i747m mkbootimg"
+depends="linux-samsung-i747m firmware-samsung-i747m mkbootimg"
 source="deviceinfo 90-android-touch-dev.rules fb.modes"
 
 package() {
