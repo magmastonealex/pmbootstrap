@@ -1,0 +1,30 @@
+pkgname=cjson
+pkgver=9999
+pkgrel=1
+pkgdesc="Another C json parsing library"
+arch="all"
+url="http://webos-ports.org"
+license="GPL-3.0+"
+depends=""
+makedepends="cmake-modules-webos qt5-qtbase-dev luna-service2 autoconf automake libtool"
+source="$pkgname-$pkgver.zip::https://github.com/openwebos/cjson/archive/0f5c23b1b1d8b194675ef10c9e380577d6046e86.zip"
+
+prepare() {
+	mkdir -p "$srcdir"/build
+	#cd "$srcdir"/$pkgname-0f5c23b1b1d8b194675ef10c9e380577d6046e86
+	#patch -p1 < "$srcdir"/mkpkgconfig.patch
+	cd "$srcdir"/$pkgname-0f5c23b1b1d8b194675ef10c9e380577d6046e86
+	sh autogen.sh
+}
+
+build() {
+	cd "$srcdir"/build
+	sh "$srcdir"/$pkgname-0f5c23b1b1d8b194675ef10c9e380577d6046e86/configure --disable-static --prefix=/usr
+	make
+}
+
+package() {
+	cd "$srcdir"/build
+	make DESTDIR="$pkgdir" install
+}
+sha512sums="f535b683157de57f13d9012434c77f33cc2001e6180095311b58965e2930b49a3d48be03f4c8bee28492041913b26682a888ade947ebb9c8ee98aef6e42a43f0  cjson-9999.zip"

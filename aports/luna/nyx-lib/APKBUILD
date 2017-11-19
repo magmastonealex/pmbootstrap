@@ -1,0 +1,34 @@
+pkgname=nyx-lib
+pkgver=9999
+pkgrel=1
+pkgdesc="Provides header files and source code common to luna-sysmgr and webappmanager"
+arch="all"
+url="http://webos-ports.org"
+license="GPL-3.0+"
+depends=""
+makedepends="cmake-modules-webos qt5-qtbase-dev glib"
+source="$pkgname-$pkgver.zip::https://github.com/webOS-ports/nyx-lib/archive/2892791512ca37b655695f6ef811b5a4602ffb4b.zip
+	compile.patch"
+
+prepare() {
+	mkdir -p "$srcdir"/build
+	cd "$srcdir"/$pkgname-2892791512ca37b655695f6ef811b5a4602ffb4b
+	patch -p1 < "$srcdir"/compile.patch
+
+}
+
+build() {
+	cd "$srcdir"/build
+	cmake "$srcdir"/$pkgname-2892791512ca37b655695f6ef811b5a4602ffb4b \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DWEBOS_INSTALL_ROOT=/
+	make
+}
+
+package() {
+	cd "$srcdir"/build
+	make DESTDIR="$pkgdir" install
+}
+sha512sums="038abf179a3d64d53db3a9838f03aae56fa20a835e6ac5c426a56d3763df821c950ab4fe0d883b1e0a52ce267e4b8ed730243b03d1f6f833fac71993e71aa230  nyx-lib-9999.zip
+b5f3a777ffd7f8d305217a04f6a3b55302ff66601c647e054a84bfbaec53ca43182e69a03cc53d88ffe4d0567ff3422561b85d3fdcab4e7b2454941205c42e17  compile.patch"

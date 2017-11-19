@@ -5,8 +5,8 @@ pkgdesc="Provides header files and source code common to luna-sysmgr and webappm
 arch="all"
 url="http://webos-ports.org"
 license="GPL-3.0+"
-depends="glib sqlite json-c"
-makedepends="cmake-modules-webos qt5-qtbase-dev glib-dev sqlite json-c"
+depends="glib sqlite nyx-lib json-c"
+makedepends="cmake-modules-webos qt5-qtbase-dev glib-dev sqlite-dev nyx-lib json-c-dev"
 source="$pkgname-$pkgver.zip::https://github.com/webOS-ports/luna-prefs/archive/620394a1c4bd5b0c0ec0a7ee15aa5e8aa8c6d957.zip"
 
 prepare() {
