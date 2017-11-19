@@ -7,10 +7,14 @@ url="http://webos-ports.org"
 license="GPL-3.0+"
 depends="luna-sysmgr-ipc luna-sysmgr-ipc-messages luna-prefs nyx-lib"
 makedepends="cmake-modules-webos qt5-qtbase-dev luna-service2 luna-sysmgr-ipc luna-sysmgr-ipc-messages luna-prefs nyx-lib"
-source="$pkgname-$pkgver.zip::https://github.com/webOS-ports/luna-sysmgr-common/archive/c583bebb8d7fb8381a071730c5c636e95bf851fb.zip"
+source="$pkgname-$pkgver.zip::https://github.com/webOS-ports/luna-sysmgr-common/archive/c583bebb8d7fb8381a071730c5c636e95bf851fb.zip
+	compile.patch"
 
 prepare() {
 	mkdir -p "$srcdir"/build
+	cd "$srcdir"/$pkgname-c583bebb8d7fb8381a071730c5c636e95bf851fb
+	patch -p1 < "$srcdir"/compile.patch
+
 }
 
 build() {
@@ -26,4 +30,5 @@ package() {
 	cd "$srcdir"/build
 	make DESTDIR="$pkgdir" install
 }
-sha512sums="fd501f111848c65a82894538bb9337b0479f2bf447a55d5857feaed5310f7c6bc35b244e713d961d77af81f625d83b31d2ec0b3252732a37dc05875cc690699a  luna-sysmgr-common-9999.zip"
+sha512sums="fd501f111848c65a82894538bb9337b0479f2bf447a55d5857feaed5310f7c6bc35b244e713d961d77af81f625d83b31d2ec0b3252732a37dc05875cc690699a  luna-sysmgr-common-9999.zip
+a682ac698055424d94f40c994a6d9a36b802f8dc604c94244722a3b466e7ec365870b7f6ef600df2d1719d397f2763c4cfb6fd6fe42c31fbdb48f3a0db1a0af6  compile.patch"
