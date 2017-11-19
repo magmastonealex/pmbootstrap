@@ -1,0 +1,34 @@
+pkgname=luna-sysmgr-ipc-messages
+pkgver=9999
+pkgrel=2
+pkgdesc="Provides header files and source code common to luna-sysmgr and webappmanager"
+arch="all"
+url="http://webos-ports.org"
+license="GPL-3.0+"
+depends=""
+makedepends="cmake-modules-webos qt5-qtbase-dev luna-service2"
+source="$pkgname-$pkgver.zip::https://github.com/openwebos/luna-sysmgr-ipc-messages/archive/ecca30313037c6f8edced00f1cf98c1f594a4007.zip
+	mkpkgconfig.patch"
+
+prepare() {
+	mkdir -p "$srcdir"/build
+	cd "$srcdir"/$pkgname-ecca30313037c6f8edced00f1cf98c1f594a4007
+	patch -p1 < "$srcdir"/mkpkgconfig.patch
+
+}
+
+build() {
+	cd "$srcdir"/build
+	cmake "$srcdir"/$pkgname-ecca30313037c6f8edced00f1cf98c1f594a4007 \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DWEBOS_INSTALL_ROOT=/
+	make
+}
+
+package() {
+	cd "$srcdir"/build
+	make DESTDIR="$pkgdir" install
+}
+sha512sums="3d342e3560aeb4e04df3f84be53351edab4b2d001481af817fd940f8b43bc5e0935b0333831109feacc0db8048869116e205b148301ec4a3598427d8e945481d  luna-sysmgr-ipc-messages-9999.zip
+d0c4a39449216adc792665c05dd2e11be6e75cf95bf04444c357006be31505b1550f3b276a9a58edb90b4ed5bbafe3b5a0e0dba4586b8794971f353d4a2a4c00  mkpkgconfig.patch"
