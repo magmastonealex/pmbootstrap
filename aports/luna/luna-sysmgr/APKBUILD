@@ -1,0 +1,72 @@
+pkgname=luna-sysmgr
+pkgver=9999
+pkgrel=4
+pkgdesc="webOS System Manager"
+arch="all"
+url="http://webos-ports.org"
+license="GPL-3.0+"
+depends="luna-sysmgr-common luna-sysmgr-ipc qt5-qtsensors qt5-qtbase serviceinstaller librolegen nyx-lib json-c libressl glib luna-service2 uriparser pmloglib libpbnjson luna-prefs"
+makedepends="cmake-modules-webos pmloglib-dev qt5-qtbase-dev luna-sysmgr-ipc-messages-dev  luna-sysmgr-common-dev luna-sysmgr-ipc-dev librolegen-dev qt5-qtsensors-dev json-c-dev libressl-dev glib-dev libpbnjson-dev serviceinstaller luna-service2-dev nyx-lib-dev luna-prefs-dev"
+source="$pkgname-$pkgver.zip::https://github.com/webOS-ports/luna-sysmgr/archive/514a3d4f4d104cb9d306772f3f5e804c018be738.zip
+	compile.patch"
+
+prepare() {
+	mkdir -p "$srcdir"/build
+	cd "$srcdir"/$pkgname-514a3d4f4d104cb9d306772f3f5e804c018be738
+	patch -p1 < "$srcdir"/compile.patch
+}
+
+build() {
+	cd "$srcdir"/build
+	cmake "$srcdir"/$pkgname-514a3d4f4d104cb9d306772f3f5e804c018be738 \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DWEBOS_INSTALL_ROOT=/
+	make
+}
+
+package() {
+	cd "$srcdir"/build
+	make DESTDIR="$pkgdir" install
+
+	sysmgrsrc="$srcdir"/$pkgname-514a3d4f4d104cb9d306772f3f5e804c018be738	
+
+	#sysmgr, unlike every other component so far, doesn't use cmake to install it's static files.
+
+	mkdir -p "$pkgdir"/usr/palm/sounds
+ 	cp -f "$sysmgrsrc"/sounds/* "$pkgdir"/usr/palm/sounds
+
+	mkdir -p "$pkgdir"/usr/share/ls2/roles/prv/
+	cp "$sysmgrsrc"/service/com.palm.luna.json.prv "$pkgdir"/usr/share/ls2/roles/prv/com.palm.luna.json
+	mkdir -p "$pkgdir"/usr/share/ls2/roles/pub/
+	cp "$sysmgrsrc"/service/com.palm.luna.json.pub "$pkgdir"/usr/share/ls2/roles/pub/com.palm.luna.json
+
+	mkdir -p "$pkgdir"/usr/share/ls2/system-services/
+	cp "$sysmgrsrc"/service/com.palm.luna.service.prv "$pkgdir"/usr/share/ls2/system-services/com.palm.luna.service
+	
+	mkdir -p "$pkgdir"/usr/share/ls2/services/
+	cp "$sysmgrsrc"/service/com.palm.luna.service.pub "$pkgdir"/usr/share/ls2/services/com.palm.luna.service
+
+	mkdir -p "$pkgdir"/etc/palm/pubsub_handlers
+	cp -f "$sysmgrsrc"/service/com.palm.appinstaller.pubsub "$pkgdir"/etc/palm/pubsub_handlers/com.palm.appinstaller
+
+	cp -f "$sysmgrsrc"/conf/default-exhibition-apps.json "$pkgdir"/etc/palm/default-exhibition-apps.json
+	cp -f "$sysmgrsrc"/conf/luna.conf "$pkgdir"/etc/palm/luna.conf
+	cp -f "$sysmgrsrc"/conf/localization.schema  "$pkgdir"/etc/palm/localization.schema
+	cp -f "$sysmgrsrc"/conf/launcher-conf.orderly "$pkgdir"/etc/palm/localization.schema
+	cp -f "$sysmgrsrc"/conf/launcher-conf.schema "$pkgdir"/etc/palm/localization.schema
+
+	mkdir -p "$pkgdir"/usr/lib/luna/customization
+	cp -f "$sysmgrsrc"/conf/default-exhibition-apps.json "$pkgdir"/usr/lib/luna/customization/default-exhibition-apps.json
+
+	mkdir -p "$pkgdir"/etc/palm/schemas
+	cp -rf "$sysmgrsrc"/conf/*.schema "$pkgdir"/etc/palm/schemas
+
+	mkdir -p "$pkgdir"/usr/palm/sysmgr/images
+	cp -fr "$sysmgrsrc"/images/* "$pkgdir"/usr/palm/sysmgr/images
+
+	mkdir -p "$pkgdir"/usr/palm/sysmgr/low-memory
+	cp -frad "$sysmgrsrc"/low-memory/* "$pkgdir"/usr/palm/sysmgr/low-memory
+}
+sha512sums="8f7a8f95f4246afbb70e276de7d5088ff6988f9333aa8ab111ef77893e5a20c63b5d91c9f30f05fe11a00e6fcc681f400675ffdbb2756d317493004654e7f534  luna-sysmgr-9999.zip
+d8a12b66e450262f7dd41b9d8d90ad3d6acfc345ea00599d7e16054d93a47d151a83871923ac586dade1513cef571b96dc69e404ab9a26ad8befb54453f608d8  compile.patch"

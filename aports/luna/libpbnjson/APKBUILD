@@ -5,7 +5,8 @@ pkgdesc="A JSON engine, implemented as a pair of libraries with APIs for easier 
 arch="all"
 url="http://webos-ports.org"
 license="GPL-3.0+"
-depends=""
+depends="uriparser"
+depends_dev="uriparser-dev glib-dev"
 makedepends="cmake-modules-webos glib-dev yajl-dev gperf gmp-dev uriparser-dev boost-dev sqlite-libs lemon"
 source="$pkgname-$pkgver.tar.gz::https://github.com/openwebos/libpbnjson/archive/versions/2.9.1.tar.gz
 	replace-bash-with-sh.patch"
