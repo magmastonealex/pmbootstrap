@@ -55,10 +55,11 @@ defaults = {
     "jobs": str(multiprocessing.cpu_count() + 1),
     "timestamp_based_rebuild": True,
     "log": "$WORK/log.txt",
-    "mirror_alpine": "https://nl.alpinelinux.org/alpine/",
+    "mirror_alpine": "http://dl-cdn.alpinelinux.org/alpine/",
     "mirror_postmarketos": "",
     "work": os.path.expanduser("~") + "/.local/var/pmbootstrap",
     "port_distccd": "33632",
+    "qemu_mesa_driver": "dri-virtio",
     "ui": "weston",
     "user": "user",
     "keymap": "",
@@ -213,6 +214,7 @@ deviceinfo_attributes = [
     "flash_heimdall_partition_kernel",
     "flash_heimdall_partition_initfs",
     "flash_heimdall_partition_system",
+    "flash_fastboot_max_size",
     "flash_fastboot_vendor_id",
     "flash_offset_base",
     "flash_offset_kernel",
@@ -363,3 +365,8 @@ aportgen = {
         "confirm_overwrite": True,
     }
 }
+
+#
+# QEMU
+#
+qemu_mesa_drivers = ["dri-swrast", "dri-virtio"]
