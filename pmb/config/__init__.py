@@ -55,10 +55,11 @@ defaults = {
     "jobs": str(multiprocessing.cpu_count() + 1),
     "timestamp_based_rebuild": True,
     "log": "$WORK/log.txt",
-    "mirror_alpine": "https://nl.alpinelinux.org/alpine/",
+    "mirror_alpine": "http://dl-cdn.alpinelinux.org/alpine/",
     "mirror_postmarketos": "",
     "work": os.path.expanduser("~") + "/.local/var/pmbootstrap",
     "port_distccd": "33632",
+    "qemu_mesa_driver": "dri-virtio",
     "ui": "weston",
     "user": "user",
     "keymap": "",
@@ -213,6 +214,8 @@ deviceinfo_attributes = [
     "flash_heimdall_partition_kernel",
     "flash_heimdall_partition_initfs",
     "flash_heimdall_partition_system",
+    "flash_fastboot_max_size",
+    "flash_fastboot_vendor_id",
     "flash_offset_base",
     "flash_offset_kernel",
     "flash_offset_ramdisk",
@@ -275,7 +278,7 @@ $FLAVOR: Kernel flavor
 $IMAGE: Path to the system partition image
 $PARTITION_SYSTEM: Partition to flash the system image
 
-Fastboot specific: $KERNEL_CMDLINE
+Fastboot specific: $KERNEL_CMDLINE, $VENDOR_ID
 Heimdall specific: $PARTITION_KERNEL, $PARTITION_INITFS
 """
 flashers = {
@@ -283,11 +286,15 @@ flashers = {
         "depends": ["android-tools"],
         "actions":
                 {
-                    "list_devices": [["fastboot", "devices", "-l"]],
-                    "flash_system": [["fastboot", "flash", "$PARTITION_SYSTEM", "$IMAGE"]],
-                    "flash_kernel": [["fastboot", "flash", "boot", "$BOOT/boot.img-$FLAVOR"]],
-                    "boot": [["fastboot", "-c", "$KERNEL_CMDLINE", "boot", "$BOOT/boot.img-$FLAVOR"]],
-
+                    "list_devices": [["fastboot", "-i", "$VENDOR_ID",
+                                      "devices", "-l"]],
+                    "flash_system": [["fastboot", "-i", "$VENDOR_ID",
+                                      "flash", "$PARTITION_SYSTEM", "$IMAGE"]],
+                    "flash_kernel": [["fastboot", "-i", "$VENDOR_ID",
+                                      "flash", "boot", "$BOOT/boot.img-$FLAVOR"]],
+                    "boot": [["fastboot", "-i", "$VENDOR_ID",
+                              "-c", "$KERNEL_CMDLINE", "boot",
+                              "$BOOT/boot.img-$FLAVOR"]],
         },
     },
     # Some Samsung devices need the initramfs to be baked into the kernel (e.g.
@@ -358,3 +365,8 @@ aportgen = {
         "confirm_overwrite": True,
     }
 }
+
+#
+# QEMU
+#
+qemu_mesa_drivers = ["dri-swrast", "dri-virtio"]

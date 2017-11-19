@@ -123,11 +123,17 @@ def test_questions(args, monkeypatch, tmpdir):
     assert func(args, "nokia-rx51") == "us/rx51_us"
     assert func(args, "lg-mako") == ""
 
+    # Qemu mesa driver
+    func = pmb.config.init.ask_for_qemu_mesa_driver
+    answers = ["invalid_driver", "dri-swrast"]
+    assert func(args) == "dri-swrast"
+
     # UI
     answers = ["invalid_UI", "weston"]
     assert pmb.config.init.ask_for_ui(args) == "weston"
 
     # Work path
     tmpdir = str(tmpdir)
-    answers = ["/dev/null", tmpdir]
+    answers = ["/dev/null", os.path.dirname(__file__), pmb.config.pmb_src,
+               tmpdir]
     assert pmb.config.init.ask_for_work_path(args) == tmpdir
