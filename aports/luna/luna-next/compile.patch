@@ -29,3 +29,18 @@ index dae2cb3..fe80c4c 100644
      ${WAYLAND_SERVER_INCLUDE_DIRS}
      ${CMAKE_CURRENT_SOURCE_DIR}/compositor)
  
+diff --git a/plugins/compositor/compositor.cpp b/plugins/compositor/compositor.cpp
+index 4e437ea..d174c5d 100644
+--- a/plugins/compositor/compositor.cpp
++++ b/plugins/compositor/compositor.cpp
+@@ -246,6 +246,10 @@ void Compositor::onSurfaceDestroyed()
+     }
+ }
+ 
++void Compositor::onSurfaceAboutToBeDestroyed(QWaylandSurface *surface) 
++{
++}
++
+ void Compositor::onSurfaceRaised()
+ {
+     QtWayland::ExtendedSurface *extSurface = qobject_cast<QtWayland::ExtendedSurface*>(sender());

@@ -1,6 +1,6 @@
 pkgname=luna-next
 pkgver=9999
-pkgrel=2
+pkgrel=4
 pkgdesc="The new webOS UI of the webOS ports project."
 arch="all"
 url="http://webos-ports.org"
@@ -34,4 +34,4 @@ package() {
 }
 sha512sums="449fdce96c6556666d8c4dcf5837b2cd99109cacc78d8ce5559913f80487db7934792ec1d15eda1ebe349e68d51b75b36f0e0859c4571c93691c9952eca70921  luna-next-9999.zip
 f6dc58db48bdd1ec4126245aaeb3cf364dfb761cf0aae172ff19eda885fe0601c249fcfc5e89c1cbfb91e857d5c57bac24495bab62a4c03dff7711e7dad2a9f8  remove-systemd-harddep.patch
-955dafa7739b24fb08d1a8558c3668a53d0f7b2d8f6db92d6ed25bff416a12b6c2c6e1c0d3087ad8cb922dfa99e5b5d4c65126f9096f5543bc0f8550d8547b90  compile.patch"
+f749ed8a4b2ebd2f8baea6772888772cd9769a71fab667c6bb76338324a4692a9adaa3f6aae04199af74286d00b045c3c7c9cc0c57a293b8fdf04e5af75dca71  compile.patch"
