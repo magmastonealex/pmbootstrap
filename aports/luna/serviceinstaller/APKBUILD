@@ -1,0 +1,31 @@
+pkgname=serviceinstaller
+pkgver=9998
+pkgrel=1
+pkgdesc="Provides header files and source code common to luna-sysmgr and webappmanager"
+arch="all"
+url="http://webos-ports.org"
+license="GPL-3.0+"
+depends="luna-service2 glib libpbnjson librolegen"
+makedepends="cmake-modules-webos qt5-qtbase-dev libpbnjson glib-dev luna-service2 librolegen"
+source="$pkgname-$pkgver.zip::https://github.com/openwebos/serviceinstaller/archive/a579f1ee97a839dd501b4b8abc206ebb48f634cb.zip"
+
+prepare() {
+	mkdir -p "$srcdir"/build
+	#cd "$srcdir"/$pkgname-b51360839d2241717eae5fe8f9d360f68da267db
+	#patch -p1 < "$srcdir"/remove-np-pthread.patch
+}
+
+build() {
+	cd "$srcdir"/build
+	cmake "$srcdir"/$pkgname-a579f1ee97a839dd501b4b8abc206ebb48f634cb \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DWEBOS_INSTALL_ROOT=/
+	make
+}
+
+package() {
+	cd "$srcdir"/build
+	make DESTDIR="$pkgdir" install
+}
+sha512sums="f1692574ef8ed91fe2dbd9a6ab454f20bb06fde37fde26cba26e540af37309847a79de62f893768f2d5c8c58f0bc27cfe6a01d506027418835af45667ccb1ac8  serviceinstaller-9998.zip"

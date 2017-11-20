@@ -1,0 +1,31 @@
+pkgname=luna-sysmgr
+pkgver=9999
+pkgrel=1
+pkgdesc="Provides header files and source code common to luna-sysmgr and webappmanager"
+arch="all"
+url="http://webos-ports.org"
+license="GPL-3.0+"
+depends="luna-sysmgr-common qt5-qtsensors serviceinstaller librolegen nyx-lib json-c libressl gthread glib luna-service2"
+makedepends="cmake-modules-webos qt5-qtbase-dev luna-sysmgr-common luna-sysmgr-ipc luna-sysmgr-ipc-messages qt5-qtsensors-dev serviceinstaller librolegen nyx-lib json-c-dev libressl-dev glib-dev luna-service2"
+source="$pkgname-$pkgver.zip::https://github.com/webOS-ports/luna-sysmgr/archive/514a3d4f4d104cb9d306772f3f5e804c018be738.zip"
+
+prepare() {
+	mkdir -p "$srcdir"/build
+	#cd "$srcdir"/$pkgname-b51360839d2241717eae5fe8f9d360f68da267db
+	#patch -p1 < "$srcdir"/remove-np-pthread.patch
+}
+
+build() {
+	cd "$srcdir"/build
+	cmake "$srcdir"/$pkgname-514a3d4f4d104cb9d306772f3f5e804c018be738 \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DWEBOS_INSTALL_ROOT=/
+	make
+}
+
+package() {
+	cd "$srcdir"/build
+	make DESTDIR="$pkgdir" install
+}
+sha512sums="8f7a8f95f4246afbb70e276de7d5088ff6988f9333aa8ab111ef77893e5a20c63b5d91c9f30f05fe11a00e6fcc681f400675ffdbb2756d317493004654e7f534  luna-sysmgr-9999.zip"

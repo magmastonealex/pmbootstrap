@@ -1,0 +1,33 @@
+pkgname=librolegen
+pkgver=9999
+pkgrel=1
+pkgdesc="Provides header files and source code common to luna-sysmgr and webappmanager"
+arch="all"
+url="http://webos-ports.org"
+license="GPL-3.0+"
+depends=""
+makedepends="cmake-modules-webos"
+source="$pkgname-$pkgver.zip::https://github.com/openwebos/librolegen/archive/2833a6e56944dbde9ef554245b7aa965c688a6cb.zip
+	compile.patch"
+
+prepare() {
+	mkdir -p "$srcdir"/build
+	cd "$srcdir"/$pkgname-2833a6e56944dbde9ef554245b7aa965c688a6cb
+	patch -p1 < "$srcdir"/compile.patch
+}
+
+build() {
+	cd "$srcdir"/build
+	cmake "$srcdir"/$pkgname-2833a6e56944dbde9ef554245b7aa965c688a6cb \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DWEBOS_INSTALL_ROOT=/
+	make
+}
+
+package() {
+	cd "$srcdir"/build
+	make DESTDIR="$pkgdir" install
+}
+sha512sums="db1aa80be9e16b6aeb9dbb6cac199a0d8a31bfae6e9324cd4674d6df29871724fd6cbfc896054acf5a0041d649241acf85e165dd518c94aff2f4c3e7ec44ef14  librolegen-9999.zip
+4aa60250ef7d01d3574fccf1427a399839d984e710782ad2753fbbbbfb5cfb652839be15a16e7b9ef11d595ecfad774ef0aed526413094694b0a5dd61969184c  compile.patch"
