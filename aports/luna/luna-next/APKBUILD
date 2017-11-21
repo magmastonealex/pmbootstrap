@@ -1,6 +1,6 @@
 pkgname=luna-next
 pkgver=9999
-pkgrel=4
+pkgrel=5
 pkgdesc="The new webOS UI of the webOS ports project."
 arch="all"
 url="http://webos-ports.org"
@@ -20,7 +20,7 @@ prepare() {
 build() {
 	cd "$srcdir"/build
 	cmake "$srcdir"/$pkgname-428a337f922691b00534f041193ee7dca8defcc2 \
-		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_BUILD_TYPE=Debug \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DKDE_INSTALL_LIBDIR=lib \
 		-DKDE_INSTALL_LIBEXECDIR=lib \
