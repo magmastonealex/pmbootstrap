@@ -1,6 +1,6 @@
 pkgname=cjson
 pkgver=9999
-pkgrel=1
+pkgrel=0
 pkgdesc="Another C json parsing library"
 arch="all"
 url="http://webos-ports.org"

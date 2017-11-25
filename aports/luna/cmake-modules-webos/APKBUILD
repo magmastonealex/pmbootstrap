@@ -1,6 +1,6 @@
 pkgname=cmake-modules-webos
 pkgver=19
-pkgrel=1
+pkgrel=0
 pkgdesc="CMake modules needed to build Open webOS components"
 url="https://github.com/openwebos/cmake-modules-webos"
 arch="noarch"

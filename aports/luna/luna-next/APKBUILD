@@ -1,6 +1,6 @@
 pkgname=luna-next
 pkgver=9999
-pkgrel=5
+pkgrel=0
 pkgdesc="The new webOS UI of the webOS ports project."
 arch="all"
 url="http://webos-ports.org"

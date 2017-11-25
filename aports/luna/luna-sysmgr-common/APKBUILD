@@ -1,6 +1,6 @@
 pkgname=luna-sysmgr-common
 pkgver=9999
-pkgrel=1
+pkgrel=0
 pkgdesc="Provides header files and source code common to luna-sysmgr and webappmanager"
 arch="all"
 url="http://webos-ports.org"

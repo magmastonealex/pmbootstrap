@@ -1,6 +1,6 @@
 pkgname=luna-sysmgr
 pkgver=9999
-pkgrel=4
+pkgrel=0
 pkgdesc="webOS System Manager"
 arch="all"
 url="http://webos-ports.org"

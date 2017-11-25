@@ -1,6 +1,6 @@
 pkgname=librolegen
 pkgver=9999
-pkgrel=1
+pkgrel=0
 pkgdesc="librolegen dynamically generates webOS system bus role files for webOS Javascript services"
 arch="all"
 url="http://webos-ports.org"
