@@ -1,18 +1,16 @@
 pkgname=luna-prefs
 pkgver=9999
 pkgrel=2
-pkgdesc="Provides header files and source code common to luna-sysmgr and webappmanager"
+pkgdesc="Retrieves system preferences values set and used by webOS"
 arch="all"
 url="http://webos-ports.org"
 license="GPL-3.0+"
-depends="glib sqlite nyx-lib json-c json-c-dev pmloglib"
-makedepends="cmake-modules-webos qt5-qtbase-dev glib-dev sqlite-dev nyx-lib json-c-dev"
+depends="glib sqlite nyx-lib json-c luna-service2 pmloglib"
+makedepends="cmake-modules-webos glib-dev json-c-dev sqlite-dev pmloglib-dev nyx-lib"
 source="$pkgname-$pkgver.zip::https://github.com/webOS-ports/luna-prefs/archive/620394a1c4bd5b0c0ec0a7ee15aa5e8aa8c6d957.zip"
 
 prepare() {
 	mkdir -p "$srcdir"/build
-#	cd "$srcdir"/$pkgname-ecca30313037c6f8edced00f1cf98c1f594a4007
-#	patch -p1 < "$srcdir"/mkpkgconfig.patch
 
 }
 

@@ -1,11 +1,11 @@
 pkgname=luna-service2
 pkgver=9999
-pkgrel=1
-pkgdesc="Provides header files and source code common to luna-sysmgr and webappmanager"
+pkgrel=0
+pkgdesc="Open webOS Luna System Bus library, daemon, and utilities"
 arch="all"
-url="http://webos-ports.org"
+url="https://github.com/webOS-ports/luna-service2"
 license="GPL-3.0+"
-depends=""
+depends="glib pmloglib libpbnjson"
 makedepends="cmake-modules-webos glib-dev libpbnjson-dev pmloglib-dev"
 source="$pkgname-$pkgver.zip::https://github.com/webOS-ports/luna-service2/archive/1e2e1a53c089003da333609946dddf063244ee34.zip
 		remove-systemd-harddep.patch remove-malloc-debug.patch"

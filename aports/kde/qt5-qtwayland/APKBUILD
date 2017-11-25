@@ -1,12 +1,12 @@
 pkgname=qt5-qtwayland
 pkgver=5.9.1
-pkgrel=3
+pkgrel=6
 arch="all"
 url='http://qt-project.org/'
 license="GPL3 LGPL3 FDL custom"
 pkgdesc='Provides APIs for Wayland'
-depends="qt5-qtdeclarative libxcomposite wayland"
-makedepends="qt5-qtbase-dev libxkbcommon-dev"
+depends="qt5-qtdeclarative libxcomposite wayland qt5-qtquickcontrols qt5-qtquickcontrols2"
+makedepends="qt5-qtbase-dev libxkbcommon-dev qt5-qtquickcontrols qt5-qtquickcontrols2"
 source="http://download.qt.io/official_releases/qt/${pkgver%.*}/${pkgver}/submodules/${pkgname/qt5-/}-opensource-src-$pkgver.tar.xz
 	0003-QtKeyExtensionGlobal-fix-export.patch"
 subpackages="$pkgname-dev $pkgname-doc"

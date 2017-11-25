@@ -1,12 +1,12 @@
 pkgname=luna-sysmgr-ipc
 pkgver=9999
-pkgrel=1
-pkgdesc="Provides header files and source code common to luna-sysmgr and webappmanager"
+pkgrel=0
+pkgdesc="Provides headers for the IPC library used by luna-sysmgr"
 arch="all"
 url="http://webos-ports.org"
 license="GPL-3.0+"
-depends=""
-makedepends="cmake-modules-webos qt5-qtbase-dev luna-service2"
+depends="glib"
+makedepends="cmake-modules-webos glib-dev"
 source="$pkgname-$pkgver.zip::https://github.com/webOS-ports/luna-sysmgr-ipc/archive/b51360839d2241717eae5fe8f9d360f68da267db.zip
 	 remove-np-pthread.patch"
 

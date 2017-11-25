@@ -1,11 +1,11 @@
 pkgname=luna-next-cardshell
 pkgver=9999
 pkgrel=1
-pkgdesc="Provides header files and source code common to luna-sysmgr and webappmanager"
+pkgdesc="The default shell used for luna-next."
 arch="all"
 url="http://webos-ports.org"
 license="GPL-3.0+"
-depends="luna-next"
+depends="luna-next qt5-qtbase qt5-qtdeclarative"
 makedepends="cmake-modules-webos"
 source="$pkgname-$pkgver.zip::https://github.com/webOS-ports/luna-next-cardshell/archive/77659074d7f82732766904c413cbece0501f399c.zip"
 
