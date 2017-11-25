@@ -9,6 +9,9 @@ depends=""
 makedepends="cmake-modules-webos"
 source="$pkgname-$pkgver.zip::https://github.com/openwebos/luna-sysmgr-ipc-messages/archive/ecca30313037c6f8edced00f1cf98c1f594a4007.zip
 	mkpkgconfig.patch"
+subpackages="$pkgname-dev"
+options="!check"
+
 
 prepare() {
 	mkdir -p "$srcdir"/build

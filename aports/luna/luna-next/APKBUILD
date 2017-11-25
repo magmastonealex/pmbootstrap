@@ -5,8 +5,8 @@ pkgdesc="The new webOS UI of the webOS ports project."
 arch="all"
 url="http://webos-ports.org"
 license="GPL-3.0+"
-depends="qt5-qtbase qt5-qtdeclarative qt5-qtwayland luna-prefs luna-sysmgr-common json-c"
-makedepends="extra-cmake-modules cmake-modules-webos qt5-qtbase-dev qt5-qtdeclarative-dev wayland-dev qt5-qtwayland-dev json-c-dev luna-sysmgr-common"
+depends="qt5-qtbase qt5-qtdeclarative qt5-qtwayland luna-prefs luna-sysmgr-common json-c nyx-lib luna-prefs"
+makedepends="extra-cmake-modules cmake-modules-webos qt5-qtbase-dev qt5-qtdeclarative-dev wayland-dev qt5-qtwayland-dev json-c-dev luna-sysmgr-common-dev nyx-lib-dev luna-prefs-dev"
 source="$pkgname-$pkgver.zip::https://github.com/webOS-ports/luna-next/archive/428a337f922691b00534f041193ee7dca8defcc2.zip
 	remove-systemd-harddep.patch compile.patch"
 
@@ -24,7 +24,8 @@ build() {
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DKDE_INSTALL_LIBDIR=lib \
 		-DKDE_INSTALL_LIBEXECDIR=lib \
-		-DWEBOS_INSTALL_ROOT=/
+		-DWEBOS_INSTALL_ROOT=/ \
+		-DOE_QMAKE_PATH_QML=/usr/lib/qt5/qml/
 	make
 }
 

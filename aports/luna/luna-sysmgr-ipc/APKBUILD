@@ -9,6 +9,8 @@ depends="glib"
 makedepends="cmake-modules-webos glib-dev"
 source="$pkgname-$pkgver.zip::https://github.com/webOS-ports/luna-sysmgr-ipc/archive/b51360839d2241717eae5fe8f9d360f68da267db.zip
 	 remove-np-pthread.patch"
+subpackages="$pkgname-dev"
+options="!check"
 
 prepare() {
 	mkdir -p "$srcdir"/build
