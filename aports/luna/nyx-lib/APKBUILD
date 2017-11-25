@@ -1,6 +1,6 @@
 pkgname=nyx-lib
 pkgver=9999
-pkgrel=1
+pkgrel=0
 pkgdesc="Open webOS Platform Portability Layer"
 arch="all"
 url="http://webos-ports.org"

@@ -1,6 +1,6 @@
 pkgname=luna-sysmgr-ipc-messages
 pkgver=9999
-pkgrel=2
+pkgrel=0
 pkgdesc="Provides message definitions for the IPC provided by luna-sysmgr."
 arch="all"
 url="http://webos-ports.org"

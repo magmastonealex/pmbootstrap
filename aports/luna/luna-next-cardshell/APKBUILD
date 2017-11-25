@@ -1,6 +1,6 @@
 pkgname=luna-next-cardshell
 pkgver=9999
-pkgrel=1
+pkgrel=0
 pkgdesc="The default shell used for luna-next."
 arch="all"
 url="http://webos-ports.org"

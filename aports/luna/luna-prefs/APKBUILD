@@ -1,6 +1,6 @@
 pkgname=luna-prefs
 pkgver=9999
-pkgrel=2
+pkgrel=0
 pkgdesc="Retrieves system preferences values set and used by webOS"
 arch="all"
 url="http://webos-ports.org"
