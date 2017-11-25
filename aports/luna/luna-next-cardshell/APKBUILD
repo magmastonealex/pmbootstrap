@@ -11,8 +11,6 @@ source="$pkgname-$pkgver.zip::https://github.com/webOS-ports/luna-next-cardshell
 
 prepare() {
 	mkdir -p "$srcdir"/build
-	#cd "$srcdir"/$pkgname-b51360839d2241717eae5fe8f9d360f68da267db
-	#patch -p1 < "$srcdir"/remove-np-pthread.patch
 }
 
 build() {
