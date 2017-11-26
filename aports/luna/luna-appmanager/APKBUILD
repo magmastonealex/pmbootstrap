@@ -1,0 +1,49 @@
+pkgname=luna-appmanager
+pkgver=9999
+pkgrel=2
+pkgdesc="Component responsible for application management in LuneOS"
+arch="all"
+url="http://webos-ports.org"
+license="GPL-3.0+"
+depends="luna-sysmgr-common luna-sysmgr-ipc qt5-qtbase serviceinstaller librolegen nyx-lib json-c glib luna-service2 pmloglib libpbnjson luna-prefs luna-sysmgr-ipc-messages libressl sqlite"
+
+
+makedepends="cmake-modules-webos luna-sysmgr-common-dev luna-sysmgr-ipc-dev qt5-qtbase-dev serviceinstaller librolegen-dev nyx-lib-dev json-c-dev glib-dev luna-service2-dev pmloglib-dev libpbnjson-dev luna-prefs-dev luna-sysmgr-ipc-messages luna-sysmgr-ipc-messages-dev libressl-dev sqlite-dev"
+source="$pkgname-$pkgver.zip::https://github.com/webOS-ports/luna-appmanager/archive/a342cc9e2a8019c93ee13030c26a5cd0d5e4f24a.zip
+compile.patch"
+
+prepare() {
+	mkdir -p "$srcdir"/build
+	cd "$srcdir"/$pkgname-a342cc9e2a8019c93ee13030c26a5cd0d5e4f24a
+	patch -p1 < "$srcdir"/compile.patch
+}
+
+build() {
+	cd "$srcdir"/build
+	cmake "$srcdir"/$pkgname-a342cc9e2a8019c93ee13030c26a5cd0d5e4f24a \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DWEBOS_INSTALL_ROOT=/
+	make
+}
+
+package() {
+	cd "$srcdir"/build
+	make DESTDIR="$pkgdir" install
+
+	appmgrsrc="$srcdir"/$pkgname-a342cc9e2a8019c93ee13030c26a5cd0d5e4f24a
+
+	mkdir -p "$pkgdir"/usr/share/ls2/roles/prv/
+	cp "$appmgrsrc"/service/luna-appmanager.json.prv "$pkgdir"/usr/share/ls2/roles/prv/luna-appmanager.json
+	mkdir -p "$pkgdir"/usr/share/ls2/roles/pub/
+	cp "$appmgrsrc"/service/luna-appmanager.json.pub "$pkgdir"/usr/share/ls2/roles/pub/luna-appmanager.json
+
+	mkdir -p "$pkgdir"/usr/share/ls2/system-services/
+	cp "$appmgrsrc"/service/luna-appmanager.service.prv "$pkgdir"/usr/share/ls2/system-services/luna-appmanager.service
+	
+	mkdir -p "$pkgdir"/usr/share/ls2/services/
+	cp "$appmgrsrc"/service/luna-appmanager.service.pub "$pkgdir"/usr/share/ls2/services/luna-appmanager.service
+
+}
+sha512sums="32812af70acc2091ea147d64423957151c0b590d7551b35ca7f077f166b1c58037eb1fab68754d9a495cd570bc516e5199553ee8f5043ce7fc8d29f388db8dc6  luna-appmanager-9999.zip
+0b48db80fb3f4dc683004bfff927577c8b2c258d735d6706406fd931456d3d01b03638635a60e1f5360d00a9439a7be7056f46d86453c06685fcb067a7d20c70  compile.patch"
