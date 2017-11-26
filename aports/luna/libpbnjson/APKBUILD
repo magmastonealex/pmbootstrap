@@ -1,6 +1,6 @@
 pkgname=libpbnjson
 pkgver=2.9.1
-pkgrel=0
+pkgrel=2
 pkgdesc="A JSON engine, implemented as a pair of libraries with APIs for easier C and C++ abstraction over the core PBNJSON library"
 arch="all"
 url="http://webos-ports.org"

@@ -1,6 +1,7 @@
 pkgname=nyx-lib
-pkgver=9999
-pkgrel=0
+pkgver=5.8.0
+pkgrel=5.8.0_git20160914
+_commit=2892791512ca37b655695f6ef811b5a4602ffb4b
 pkgdesc="Open webOS Platform Portability Layer"
 arch="all"
 url="http://webos-ports.org"
@@ -8,21 +9,20 @@ license="GPL-3.0+"
 depends="glib"
 depends_dev="glib-dev"
 makedepends="cmake-modules-webos glib-dev"
-source="$pkgname-$pkgver.zip::https://github.com/webOS-ports/nyx-lib/archive/2892791512ca37b655695f6ef811b5a4602ffb4b.zip 
+source="$pkgname-$pkgver.tar.gz::https://github.com/webOS-ports/nyx-lib/archive/$_commit.tar.gz 
 	addstdint.patch"
 subpackages="$pkgname-dev"
 options="!check"
+builddir="$srcdir/$pkgname-$_commit"
 
 prepare() {
+	default_prepare
 	mkdir -p "$srcdir"/build
-	cd "$srcdir"/$pkgname-2892791512ca37b655695f6ef811b5a4602ffb4b
-	patch -p1 < "$srcdir"/addstdint.patch
-
 }
 
 build() {
 	cd "$srcdir"/build
-	cmake "$srcdir"/$pkgname-2892791512ca37b655695f6ef811b5a4602ffb4b \
+	cmake "$builddir" \
 		-DCMAKE_BUILD_TYPE=Release \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DWEBOS_INSTALL_ROOT=/
@@ -33,5 +33,5 @@ package() {
 	cd "$srcdir"/build
 	make DESTDIR="$pkgdir" install
 }
-sha512sums="038abf179a3d64d53db3a9838f03aae56fa20a835e6ac5c426a56d3763df821c950ab4fe0d883b1e0a52ce267e4b8ed730243b03d1f6f833fac71993e71aa230  nyx-lib-9999.zip
+sha512sums="4e2978067d19872d44c7c6fe7b10e3c32dcf575904aa4dd6bab487145cd30ee5f321ff8bc6ea68259ef4c0d4f5fcda885db5d2c48de6c050da83c1a6f50c0421  nyx-lib-5.8.0.tar.gz
 b5f3a777ffd7f8d305217a04f6a3b55302ff66601c647e054a84bfbaec53ca43182e69a03cc53d88ffe4d0567ff3422561b85d3fdcab4e7b2454941205c42e17  addstdint.patch"

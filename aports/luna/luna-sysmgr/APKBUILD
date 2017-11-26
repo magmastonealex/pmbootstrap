@@ -1,24 +1,25 @@
 pkgname=luna-sysmgr
-pkgver=9999
-pkgrel=0
+pkgver=0.912
+pkgrel=0.912_git20171117
+_commit=514a3d4f4d104cb9d306772f3f5e804c018be738
 pkgdesc="webOS System Manager"
 arch="all"
 url="http://webos-ports.org"
 license="GPL-3.0+"
 depends="luna-sysmgr-common luna-sysmgr-ipc qt5-qtsensors qt5-qtbase serviceinstaller librolegen nyx-lib json-c libressl glib luna-service2 uriparser pmloglib libpbnjson luna-prefs"
 makedepends="cmake-modules-webos pmloglib-dev qt5-qtbase-dev luna-sysmgr-ipc-messages-dev  luna-sysmgr-common-dev luna-sysmgr-ipc-dev librolegen-dev qt5-qtsensors-dev json-c-dev libressl-dev glib-dev libpbnjson-dev serviceinstaller luna-service2-dev nyx-lib-dev luna-prefs-dev"
-source="$pkgname-$pkgver.zip::https://github.com/webOS-ports/luna-sysmgr/archive/514a3d4f4d104cb9d306772f3f5e804c018be738.zip
+source="$pkgname-$pkgver.tar.gz::https://github.com/webOS-ports/luna-sysmgr/archive/$_commit.tar.gz
 	compile.patch"
+builddir="$srcdir/$pkgname-$_commit"
 
 prepare() {
+	default_prepare
 	mkdir -p "$srcdir"/build
-	cd "$srcdir"/$pkgname-514a3d4f4d104cb9d306772f3f5e804c018be738
-	patch -p1 < "$srcdir"/compile.patch
 }
 
 build() {
 	cd "$srcdir"/build
-	cmake "$srcdir"/$pkgname-514a3d4f4d104cb9d306772f3f5e804c018be738 \
+	cmake "$builddir" \
 		-DCMAKE_BUILD_TYPE=Release \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DWEBOS_INSTALL_ROOT=/
@@ -68,5 +69,5 @@ package() {
 	mkdir -p "$pkgdir"/usr/palm/sysmgr/low-memory
 	cp -frad "$sysmgrsrc"/low-memory/* "$pkgdir"/usr/palm/sysmgr/low-memory
 }
-sha512sums="8f7a8f95f4246afbb70e276de7d5088ff6988f9333aa8ab111ef77893e5a20c63b5d91c9f30f05fe11a00e6fcc681f400675ffdbb2756d317493004654e7f534  luna-sysmgr-9999.zip
+sha512sums="9bdde8c9ed05986816b0afc76565ded065aec279ffbdeeac70827f01988ab6034676496dbd5955ee4cfc33e889758ee109ab143e43c542cfb5b95dbaa9fbd722  luna-sysmgr-0.912.tar.gz
 d8a12b66e450262f7dd41b9d8d90ad3d6acfc345ea00599d7e16054d93a47d151a83871923ac586dade1513cef571b96dc69e404ab9a26ad8befb54453f608d8  compile.patch"

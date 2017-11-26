@@ -1,23 +1,25 @@
 pkgname=luna-init
-pkgver=9999
-pkgrel=0
+pkgver=5.0.0
+pkgrel=5.0.0_git20171117
+_commit=5fff640fb0b9f3e973c13d1620889b2da4c11766
 pkgdesc="Initialization and font setup files used by luna-sysmgr."
 arch="all"
 url="http://webos-ports.org"
 license="GPL-3.0+"
 depends=""
 makedepends="cmake-modules-webos python2 py2-tz"
-source="$pkgname-$pkgver.zip::https://github.com/webOS-ports/luna-init/archive/5fff640fb0b9f3e973c13d1620889b2da4c11766.zip"
+source="$pkgname-$pkgver.tar.gz::https://github.com/webOS-ports/luna-init/archive/$_commit.tar.gz"
 options="!check"
+builddir="$srcdir/$pkgname-$_commit"
 
 prepare() {
+	default_prepare
 	mkdir -p "$srcdir"/build
-
 }
 
 build() {
 	cd "$srcdir"/build
-	cmake "$srcdir"/$pkgname-5fff640fb0b9f3e973c13d1620889b2da4c11766 \
+	cmake "$builddir" \
 		-DCMAKE_BUILD_TYPE=Release \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DWEBOS_INSTALL_ROOT=/
@@ -28,4 +30,4 @@ package() {
 	cd "$srcdir"/build
 	make DESTDIR="$pkgdir" install
 }
-sha512sums="542e4f1392afe9eb1dbbae2482dcad49eb7a3d2070830ac1aaf01509b3e27fc959ce308d4a325bb712dd8b82993f30414484c218f252172901fd48fdb02c48d6  luna-init-9999.zip"
+sha512sums="9278b53e8358230e0979d314958a02ada6d68a68b97e253d81ffc5132901cf7aa033c8d908530cbf36c422a161a3f80cc70f1ddb3e0e4b3fae86183c39d10b95  luna-init-5.0.0.tar.gz"

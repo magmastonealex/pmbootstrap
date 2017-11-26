@@ -9,20 +9,16 @@ depends="qt5-qtbase"
 makedepends="qt5-qtbase-dev"
 source="http://download.qt.io/official_releases/qt/${pkgver%.*}/${pkgver}/submodules/${pkgname/qt5-/}-opensource-src-$pkgver.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc"
-
-prepare() {
-	mkdir -p "$srcdir"/build
-}
+builddir="$srcdir/${pkgname/qt5-/}-opensource-src-$pkgver"
 
 build() {
-	cd $srcdir/build
-
-	qmake-qt5 "$srcdir"/${pkgname/qt5-/}-opensource-src-$pkgver
+	cd "$builddir"
+	qmake-qt5
 	make
 }
 
 package() {
-	cd $srcdir/build
+	cd "$builddir"
 
 	make INSTALL_ROOT="$pkgdir" install
 
