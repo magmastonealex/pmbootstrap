@@ -1,21 +1,24 @@
 pkgname=serviceinstaller
-pkgver=9998
-pkgrel=0
+pkgver=2.0.0
+pkgrel=2.0.0_git20130816
+_commit=a579f1ee97a839dd501b4b8abc206ebb48f634cb
 pkgdesc="An extensible object oriented component used to add service components to webOS"
 arch="all"
 url="http://webos-ports.org"
 license="GPL-3.0+"
 depends="luna-service2 glib libpbnjson librolegen pmloglib"
 makedepends="cmake-modules-webos libpbnjson-dev glib-dev pmloglib-dev librolegen-dev luna-service2-dev"
-source="$pkgname-$pkgver.zip::https://github.com/openwebos/serviceinstaller/archive/a579f1ee97a839dd501b4b8abc206ebb48f634cb.zip"
+source="$pkgname-$pkgver.tar.gz::https://github.com/openwebos/serviceinstaller/archive/$_commit.tar.gz"
+builddir="$srcdir/$pkgname-$_commit"
 
 prepare() {
+	default_prepare
 	mkdir -p "$srcdir"/build
 }
 
 build() {
 	cd "$srcdir"/build
-	cmake "$srcdir"/$pkgname-a579f1ee97a839dd501b4b8abc206ebb48f634cb \
+	cmake "$builddir" \
 		-DCMAKE_BUILD_TYPE=Release \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DWEBOS_INSTALL_ROOT=/
@@ -26,4 +29,4 @@ package() {
 	cd "$srcdir"/build
 	make DESTDIR="$pkgdir" install
 }
-sha512sums="f1692574ef8ed91fe2dbd9a6ab454f20bb06fde37fde26cba26e540af37309847a79de62f893768f2d5c8c58f0bc27cfe6a01d506027418835af45667ccb1ac8  serviceinstaller-9998.zip"
+sha512sums="230c9f38bbb4d8a83d4b29693920689cd0ceb659204ffc91b664bdade1abdf0711fd21cae28262caa52e1cd0de1de8245743d94cbc58bae054f6225d788fd2db  serviceinstaller-2.0.0.tar.gz"

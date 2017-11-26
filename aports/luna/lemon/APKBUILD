@@ -1,6 +1,6 @@
 pkgname=lemon
 pkgver=3.20.1
-pkgrel=0
+pkgrel=1
 pkgdesc="The Lemon Parser Generator"
 arch="all"
 url="https://www.hwaci.com/sw/lemon"
