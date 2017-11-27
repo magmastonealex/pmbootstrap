@@ -35,10 +35,55 @@ import pmb.chroot.other
 import pmb.flasher
 import pmb.helpers.logging
 import pmb.helpers.other
+import pmb.helpers.repo
 import pmb.helpers.run
 import pmb.install
 import pmb.parse
 import pmb.qemu
+
+
+def _build_verify_usage_device_package(args, pkgname):
+    """
+    Detect if the user is about to build a device- package for the wrong
+    architecture. The package is noarch, but the dependencies (kernel!) will get
+    pulled in with the same arch as dependency.
+    """
+    # Skip non-device-packages
+    if not pkgname.startswith("device-"):
+        return
+
+    # Only continue when the --arch parameter is *not* the device architecture
+    deviceinfo = args.aports + "/device/" + pkgname + "/deviceinfo"
+    if not os.path.exists(deviceinfo):
+        return
+    device = pkgname.split("-", 1)[1]
+    arch = pmb.parse.deviceinfo(args, device)["arch"]
+    if args.arch == arch:
+        return
+
+    # Abort with a big note
+    logging.info("Dependency handling in 'pmbootstrap build' has been"
+                 " changed.")
+    logging.info("Previously we only built and installed the 'makedepends'"
+                 " from the APKBUILDs, now we use the 'depends', too.")
+    logging.info("")
+    logging.info("Your options:")
+    logging.info("* Ignore depends (fast, old behavior, may cause problems"
+                 " with some packages):")
+    logging.info("  pmbootstrap build " + pkgname + " -i")
+    logging.info("* Build with depends (kernel!) and specify the right"
+                 " architecture:")
+    logging.info("  pmbootstrap build " + pkgname + " --arch=" + arch)
+    logging.info("")
+    logging.info("This change was necessary to be more compatible with Alpine's"
+                 " abuild.")
+    logging.info("The default architecture is the native one (" +
+                 args.arch_native + " in your case), so you need to overwrite")
+    logging.info("it now to get the kernel dependency of your device package"
+                 " for the right architecture.")
+    logging.info("Sorry for the inconvenience.")
+    logging.info("")
+    raise RuntimeError("Missing -i or --arch parameter")
 
 
 def _parse_flavor(args):
@@ -85,8 +130,16 @@ def aportgen(args):
 
 
 def build(args):
+    # Strict mode: zap everything
     if args.strict:
         pmb.chroot.zap(args, False)
+
+    # Detect wrong usage for device- packages
+    if not args.ignore_depends:
+        for package in args.packages:
+            _build_verify_usage_device_package(args, package)
+
+    # Build all packages
     for package in args.packages:
         pmb.build.package(args, package, args.arch, args.force,
                           args.buildinfo, args.strict)
@@ -114,16 +167,15 @@ def chroot(args):
 
 
 def config(args):
-    pmb.helpers.logging.disable()
-    if args.name and args.name not in pmb.config.defaults:
-        valid_keys = ", ".join(sorted(pmb.config.defaults.keys()))
-        print("The variable name you have specified is invalid.")
-        print("The following are supported: " + valid_keys)
-        sys.exit(1)
+    keys = pmb.config.config_keys
+    if args.name and args.name not in keys:
+        logging.info("NOTE: Valid config keys: " + ", ".join(keys))
+        raise RuntimeError("Invalid config key: " + args.name)
 
     cfg = pmb.config.load(args)
     if args.value:
         cfg["pmbootstrap"][args.name] = args.value
+        logging.info("Config changed: " + args.name + "='" + args.value + "'")
         pmb.config.save(args, cfg)
     elif args.name:
         value = cfg["pmbootstrap"].get(args.name, "")
@@ -131,10 +183,12 @@ def config(args):
     else:
         cfg.write(sys.stdout)
 
+    # Don't write the "Done" message
+    pmb.helpers.logging.disable()
+
 
 def index(args):
-    pmb.build.index_repo(args, args.arch_native)
-    pmb.build.symlink_noarch_packages(args)
+    pmb.build.index_repo(args)
 
 
 def initfs(args):
@@ -155,6 +209,10 @@ def export(args):
 
 def menuconfig(args):
     pmb.build.menuconfig(args, args.package)
+
+
+def update(args):
+    pmb.helpers.repo.update(args, True)
 
 
 def kconfig_check(args):
@@ -223,3 +281,11 @@ def zap(args):
     pmb.chroot.zap(args, packages=args.packages, http=args.http,
                    mismatch_bins=args.mismatch_bins, old_bins=args.old_bins,
                    distfiles=args.distfiles)
+
+
+def bootimg_analyze(args):
+    bootimg = pmb.parse.bootimg(args, args.path)
+    tmp_output = "Put these variables in the deviceinfo file of your device:\n"
+    for line in pmb.aportgen.device.generate_deviceinfo_fastboot_content(args, bootimg).split("\n"):
+        tmp_output += "\n" + line.lstrip()
+    logging.info(tmp_output)

@@ -51,7 +51,8 @@ def arguments_flasher(subparser):
         action.add_argument("--flavor", default=None)
 
     # Flash system
-    flash_system = sub.add_parser("flash_system", help="flash the system partition")
+    flash_system = sub.add_parser(
+        "flash_system", help="flash the system partition")
     flash_system.add_argument("--partition", default=None, help="partition to flash"
                               " the system image")
 
@@ -96,6 +97,29 @@ def arguments_initfs(subparser):
             help="name of the kernel flavor (run 'pmbootstrap flasher list_flavors'"
             " to get a list of all installed flavors")
 
+    return ret
+
+
+def arguments_qemu(subparser):
+    ret = subparser.add_parser("qemu")
+    ret.add_argument("--arch", choices=["aarch64", "arm", "x86_64"],
+                     help="emulate a different architecture")
+    ret.add_argument("--cmdline", help="override kernel commandline")
+    ret.add_argument(
+        "--image-size", help="set system image size (e.g. 2048M or 2G)")
+    ret.add_argument("-m", "--memory", type=int, default=1024,
+                     help="guest RAM (default: 1024)")
+    ret.add_argument("-p", "--port", type=int, default=2222,
+                     help="SSH port (default: 2222)")
+
+    display = ret.add_mutually_exclusive_group()
+    display.add_argument("--spice", dest="spice_port", const="8077",
+                         action="store", nargs="?", default=None,
+                         help="use SPICE for 2D acceleration (default port:"
+                         " 8077)")
+    display.add_argument("--display", dest="qemu_display", const="sdl,gl=on",
+                         help="Qemu's display parameter (default: sdl,gl=on)",
+                         default="sdl,gl=on", nargs="?")
     return ret
 
 
@@ -150,9 +174,11 @@ def arguments():
     sub.add_parser("shutdown", help="umount, unregister binfmt")
     sub.add_parser("index", help="re-index all repositories with custom built"
                    " packages (do this after manually removing package files)")
+    sub.add_parser("update", help="update all APKINDEX files")
     arguments_export(sub)
     arguments_flasher(sub)
     arguments_initfs(sub)
+    arguments_qemu(sub)
 
     # Action: log
     log = sub.add_parser("log", help="follow the pmbootstrap logfile")
@@ -244,11 +270,21 @@ def arguments():
                               " (aport/APKBUILD) based on an upstream aport from Alpine")
     build = sub.add_parser("build", help="create a package for a"
                            " specific architecture")
-    build.add_argument("--arch", choices=arch_choices)
-    build.add_argument("--force", action="store_true")
+    build.add_argument("--arch", choices=arch_choices, default=arch_native,
+                       help="CPU architecture to build for (default: " +
+                       arch_native + ")")
+    build.add_argument("--force", action="store_true", help="even build if not"
+                       " necessary")
     build.add_argument("--buildinfo", action="store_true")
     build.add_argument("--strict", action="store_true", help="(slower) zap and install only"
                        " required depends when building, to detect dependency errors")
+    build.add_argument("-i", "--ignore-depends", action="store_true",
+                       help="only build and install makedepends from an"
+                       " APKBUILD, ignore the depends (old behavior). This is"
+                       " faster for device packages for example, because then"
+                       " you don't need to build and install the kernel. But it"
+                       " is incompatible with how Alpine's abuild handles it.",
+                       dest="ignore_depends")
     build.add_argument("--noarch-arch", dest="noarch_arch", default=None,
                        help="which architecture to use to build 'noarch'"
                             " packages. Defaults to the native arch normally,"
@@ -291,39 +327,22 @@ def arguments():
     config.add_argument("name", nargs="?", help="variable name")
     config.add_argument("value", nargs="?", help="set variable to value")
 
-    # Action: qemu
-    qemu = sub.add_parser("qemu")
-    qemu.add_argument("--arch", choices=["aarch64", "arm", "x86_64"],
-                      help="emulate a different architecture")
-    qemu.add_argument("--cmdline", help="override kernel commandline")
-    qemu.add_argument("--image-size", help="set system image size (e.g. 2048M or 2G)")
-    qemu.add_argument("-m", "--memory", type=int, default=1024,
-                      help="guest RAM (default: 1024)")
-    qemu.add_argument("-p", "--port", type=int, default=2222,
-                      help="ssh port (default: 2222)")
-    qemu.add_argument("--spice", dest="use_spice",
-                      default=False, action="store_true",
-                      help="connect to the VM using SPICE (NOTE: you need to"
-                           " have a SPICE client installed in your host"
-                           " machine)")
+    # Action: bootimg_analyze
+    bootimg_analyze = sub.add_parser("bootimg_analyze", help="Extract all the"
+                                     " information from an existing boot.img")
+    bootimg_analyze.add_argument("path", help="path to the boot.img")
 
     # Use defaults from the user's config file
     args = parser.parse_args()
-    cfg = pmb.config.load(args)
-    for varname in cfg["pmbootstrap"]:
-        if varname not in args or not getattr(args, varname):
-            value = cfg["pmbootstrap"][varname]
-            if varname in pmb.config.defaults:
-                default = pmb.config.defaults[varname]
-                if isinstance(default, bool):
-                    value = (value.lower() == "true")
-            setattr(args, varname, value)
+    pmb.config.merge_with_args(args)
 
-    # Replace $WORK in variables from user's config
-    for varname in cfg["pmbootstrap"]:
-        old = getattr(args, varname)
+    # Replace $WORK in variables from any config
+    for key, value in pmb.config.defaults.items():
+        if key not in args:
+            continue
+        old = getattr(args, key)
         if isinstance(old, str):
-            setattr(args, varname, old.replace("$WORK", args.work))
+            setattr(args, key, old.replace("$WORK", args.work))
 
     # Add convenience shortcuts
     setattr(args, "arch_native", arch_native)
@@ -337,7 +356,7 @@ def arguments():
                             "find_aport": {}})
 
     # Add and verify the deviceinfo (only after initialization)
-    if args.action not in ("init", "config"):
+    if args.action not in ("init", "config", "bootimg_analyze"):
         setattr(args, "deviceinfo", pmb.parse.deviceinfo(args))
         arch = args.deviceinfo["arch"]
         if (arch != args.arch_native and

@@ -32,7 +32,7 @@ import pmb.parse
 
 @pytest.fixture
 def args(tmpdir, request):
-    sys.argv = ["pmbootstrap.py", "chroot"]
+    sys.argv = ["pmbootstrap.py", "build", "-i", "device-testsuite-testdevice"]
     args = pmb.parse.arguments()
     args.log = args.work + "/log_testsuite.txt"
     pmb.helpers.logging.init(args)
@@ -107,16 +107,16 @@ def test_aportgen_device_wizard(args, monkeypatch):
     # First run
     deviceinfo, apkbuild, apkbuild_linux = generate(args, monkeypatch, answers)
     assert apkbuild["pkgname"] == "device-testsuite-testdevice"
-    assert apkbuild["pkgdesc"] == "Testsuite Testdevice"
+    assert apkbuild["pkgdesc"] == "Testsuite Testsuite Testdevice"
     assert apkbuild["depends"] == ["linux-testsuite-testdevice"]
 
     assert apkbuild_linux["pkgname"] == "linux-testsuite-testdevice"
-    assert apkbuild_linux["pkgdesc"] == "Testsuite Testdevice kernel fork"
+    assert apkbuild_linux["pkgdesc"] == "Testsuite Testsuite Testdevice kernel fork"
     assert apkbuild_linux["arch"] == ["armhf"]
     assert apkbuild_linux["_flavor"] == "testsuite-testdevice"
 
     assert deviceinfo["name"] == "Testsuite Testdevice"
-    assert deviceinfo["manufacturer"] == answers["Manufacturer"]
+    assert deviceinfo["manufacturer"] == "Testsuite"
     assert deviceinfo["arch"] == "armhf"
     assert deviceinfo["keyboard"] == "false"
     assert deviceinfo["external_disk"] == "true"
@@ -139,6 +139,7 @@ def test_aportgen_device_wizard(args, monkeypatch):
     # fastboot (mkbootimg)
     answers["overwrite"] = "y"
     answers["Flash method"] = "fastboot"
+    answers["Path"] = ""
     deviceinfo, apkbuild, apkbuild_linux = generate(args, monkeypatch, answers)
     assert apkbuild["depends"] == ["linux-testsuite-testdevice", "mkbootimg"]
     assert deviceinfo["flash_methods"] == answers["Flash method"]

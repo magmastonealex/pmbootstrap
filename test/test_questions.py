@@ -22,8 +22,8 @@ import pytest
 import sys
 
 # Import from parent directory
-sys.path.append(os.path.realpath(
-    os.path.join(os.path.dirname(__file__) + "/..")))
+pmb_src = os.path.realpath(os.path.join(os.path.dirname(__file__) + "/.."))
+sys.path.append(pmb_src)
 import pmb.aportgen.device
 import pmb.config
 import pmb.config.init
@@ -92,6 +92,23 @@ def test_questions(args, monkeypatch, tmpdir):
     answers = ["invalid_arch", "aarch64"]
     assert pmb.aportgen.device.ask_for_architecture(args) == "aarch64"
 
+    # Bootimg
+    func = pmb.aportgen.device.ask_for_bootimg
+    answers = ["invalid_path", ""]
+    assert func(args) is None
+
+    bootimg_path = pmb_src + "/test/testdata/bootimg/normal-boot.img"
+    answers = [bootimg_path]
+    output = {"base": "0x80000000",
+              "kernel_offset": "0x00008000",
+              "ramdisk_offset": "0x04000000",
+              "second_offset": "0x00f00000",
+              "tags_offset": "0x0e000000",
+              "pagesize": "2048",
+              "cmdline": "bootopt=64S3,32S1,32S1",
+              "qcdt": "false"}
+    assert func(args) == output
+
     # Device
     func = pmb.config.init.ask_for_device
     answers = ["lg-mako"]
@@ -122,6 +139,11 @@ def test_questions(args, monkeypatch, tmpdir):
     answers = ["invalid_keymap", "us/rx51_us"]
     assert func(args, "nokia-rx51") == "us/rx51_us"
     assert func(args, "lg-mako") == ""
+
+    # Qemu mesa driver
+    func = pmb.config.init.ask_for_qemu_mesa_driver
+    answers = ["invalid_driver", "dri-swrast"]
+    assert func(args) == "dri-swrast"
 
     # UI
     answers = ["invalid_UI", "weston"]
