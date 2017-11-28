@@ -29,4 +29,4 @@ package() {
 	cd "$srcdir"/build
 	make DESTDIR="$pkgdir" install
 }
-sha512sums="230c9f38bbb4d8a83d4b29693920689cd0ceb659204ffc91b664bdade1abdf0711fd21cae28262caa52e1cd0de1de8245743d94cbc58bae054f6225d788fd2db  serviceinstaller-2.0.0.tar.gz"
+sha512sums="230c9f38bbb4d8a83d4b29693920689cd0ceb659204ffc91b664bdade1abdf0711fd21cae28262caa52e1cd0de1de8245743d94cbc58bae054f6225d788fd2db  serviceinstaller-2.0.0_git20130816.tar.gz"
