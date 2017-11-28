@@ -1,6 +1,6 @@
 pkgname=serviceinstaller
-pkgver=2.0.0
-pkgrel=2.0.0_git20130816
+pkgver=2.0.0_git20130816
+pkgrel=0
 _commit=a579f1ee97a839dd501b4b8abc206ebb48f634cb
 pkgdesc="An extensible object oriented component used to add service components to webOS"
 arch="all"

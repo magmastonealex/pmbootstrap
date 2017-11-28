@@ -1,6 +1,6 @@
 pkgname=luna-prefs
-pkgver=7.0.0
-pkgrel=7.0.0_git20141219
+pkgver=7.0.0_git20141219
+pkgrel=0
 _commit=620394a1c4bd5b0c0ec0a7ee15aa5e8aa8c6d957
 pkgdesc="Retrieves system preferences values set and used by webOS"
 arch="all"
@@ -32,4 +32,4 @@ package() {
 	cd "$srcdir"/build
 	make DESTDIR="$pkgdir" install
 }
-sha512sums="ed514077b776f6a0901fc13e101ee1bccac05304d1b2bc56de6fd43558bd51587e049c2fd79618fc4190c4c2b92d2c591cb0ae2d7dfd89351a21f217ca2adcb1  luna-prefs-7.0.0.tar.gz"
+sha512sums="ed514077b776f6a0901fc13e101ee1bccac05304d1b2bc56de6fd43558bd51587e049c2fd79618fc4190c4c2b92d2c591cb0ae2d7dfd89351a21f217ca2adcb1  luna-prefs-7.0.0_git20141219.tar.gz"

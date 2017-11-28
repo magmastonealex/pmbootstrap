@@ -1,6 +1,6 @@
 pkgname=nyx-lib
-pkgver=5.8.0
-pkgrel=5.8.0_git20160914
+pkgver=5.8.0_git20160914
+pkgrel=0
 _commit=2892791512ca37b655695f6ef811b5a4602ffb4b
 pkgdesc="Open webOS Platform Portability Layer"
 arch="all"
@@ -33,5 +33,5 @@ package() {
 	cd "$srcdir"/build
 	make DESTDIR="$pkgdir" install
 }
-sha512sums="4e2978067d19872d44c7c6fe7b10e3c32dcf575904aa4dd6bab487145cd30ee5f321ff8bc6ea68259ef4c0d4f5fcda885db5d2c48de6c050da83c1a6f50c0421  nyx-lib-5.8.0.tar.gz
+sha512sums="4e2978067d19872d44c7c6fe7b10e3c32dcf575904aa4dd6bab487145cd30ee5f321ff8bc6ea68259ef4c0d4f5fcda885db5d2c48de6c050da83c1a6f50c0421  nyx-lib-5.8.0_git20160914.tar.gz
 b5f3a777ffd7f8d305217a04f6a3b55302ff66601c647e054a84bfbaec53ca43182e69a03cc53d88ffe4d0567ff3422561b85d3fdcab4e7b2454941205c42e17  addstdint.patch"

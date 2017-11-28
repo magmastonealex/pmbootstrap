@@ -1,5 +1,5 @@
 pkgname=lemon
-pkgver=3.20.1
+pkgver=3.21
 pkgrel=1
 pkgdesc="The Lemon Parser Generator"
 arch="all"
@@ -7,26 +7,22 @@ url="https://www.hwaci.com/sw/lemon"
 license="custom"
 depends=""
 makedepends=""
-source="$pkgname-$pkgver.zip::https://www.sqlite.org/2017/sqlite-src-3200100.zip"
+source="lemon-$pkgver.c::https://www.sqlite.org/src/raw?ci=branch-$pkgver&filename=tool/lemon.c
+lempar-$pkgver.c::https://www.sqlite.org/src/raw?ci=branch-$pkgver&filename=tool/lempar.c"
 options="!check"
 
-pkgfqn="sqlite-src-3200100"
-
-prepare() {
-	mkdir -p "$srcdir"/build
-	cd "$srcdir"/build
-	cp "$srcdir"/$pkgfqn/tool/lemon.c "$srcdir"/build
-}
 
 build() {
-	gcc lemon.c -c -o lemon.o
+	cd "$srcdir"
+	gcc lemon-$pkgver.c -c -o lemon.o
 	gcc lemon.o -o lemon
 }
 
 package() {
-	cd "$srcdir"/build
+	cd "$srcdir"
 	install -d "$pkgdir"/usr/bin/
 	install -m 0755 lemon "$pkgdir"/usr/bin/
-	install -m 0644 "$srcdir"/$pkgfqn/tool/lempar.c "$pkgdir"/usr/bin/
+	install -m 0644 "$srcdir"/lempar-$pkgver.c "$pkgdir"/usr/bin/lempar.c
 }
-sha512sums="845a0d64c9356aadf178c04dd716bbd37a7353526b06cfa8e8f65653cf6a1893a5c5e8c78d20b43910c34d9167272cf517749c91ed0ba7686977e3d0327e8939  lemon-3.20.1.zip"
+sha512sums="17c5210e856a6eeb195b9c8c68b83407b7085596dd48e8e55059d644725ff84fb56a5cf223530723b9a69382f619383b4035fe46588300e2e5776228429ec5d4  lemon-3.21.c
+cbf78b843fdebadebff498db803fce545e5c1cb3dcf76da4989513f1f970a2a192d3f775430a4ae81e89b41477a06a530f01c83641ca36949a7c24452b4fba13  lempar-3.21.c"

@@ -8,7 +8,7 @@ if test -z "${XDG_RUNTIME_DIR}"; then
 	export LD_PRELOAD=/usr/lib/libwayland-server.so.0
 	export QT_QPA_PLATFORM=eglfs
 	export QT_QUICK_BACKEND=software
-	export QML2_IMPORT_PATH=/
+	
 	/usr/sbin/ls-hubd --conf /etc/luna-service2/ls-private.conf &
 	sleep 1
 	/usr/sbin/ls-hubd --public --conf /etc/luna-service2/ls-public.conf &

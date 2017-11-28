@@ -1,7 +1,7 @@
 pkgname=postmarketos-ui-luna
 pkgver=1
 pkgrel=0
-pkgdesc="(Wayland) webOS UI, ported from the LuneOS project. (Currently not working)."
+pkgdesc="(Wayland) webOS UI, ported from the LuneOS project (Not working yet)"
 url="https://wiki.postmarketos.org/wiki/LuneOS_UI"
 arch="noarch"
 license="GPL3+"
@@ -12,7 +12,7 @@ source="start_luna.sh"
 options="!check"
 
 package() {
-	install -D -m644 "$srcdir"/start_luna.sh \
+	install -D -m755 "$srcdir"/start_luna.sh \
 		"$pkgdir"/usr/bin/start_luna.sh
 }
-sha512sums="f104de5d77fa12acacc1af56d5b279687ec2ef3ea4222454a4a5bc3074e8af6bea710d5a3409c87af5f3f40d1a07d97ca6ca6084dc7152ac5ebcd481391888df  start_luna.sh"
+sha512sums="39f88a29e97d4bc29e24b4e2d839cf5320439113905fbb4789c3e72371d3bb5995a02374948b68087e44e7fe8e13a5baf408800fbc3eabe3666614510b9831e8  start_luna.sh"

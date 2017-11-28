@@ -1,14 +1,14 @@
 pkgname=libpbnjson
 pkgver=2.9.1
 pkgrel=2
-pkgdesc="A JSON engine, implemented as a pair of libraries with APIs for easier C and C++ abstraction over the core PBNJSON library"
+pkgdesc="Palm's Better Native JSON library"
 arch="all"
 url="http://webos-ports.org"
 license="GPL-3.0+"
 depends="uriparser"
 depends_dev="uriparser-dev glib-dev"
 makedepends="cmake-modules-webos glib-dev yajl-dev gperf gmp-dev uriparser-dev boost-dev sqlite-libs lemon"
-source="$pkgname-$pkgver.tar.gz::https://github.com/openwebos/libpbnjson/archive/versions/2.9.1.tar.gz
+source="$pkgname-$pkgver.tar.gz::https://github.com/openwebos/libpbnjson/archive/versions/$pkgver.tar.gz
 	replace-bash-with-sh.patch"
 subpackages="$pkgname-dev"
 
@@ -33,4 +33,4 @@ package() {
 	make DESTDIR="$pkgdir" install
 }
 sha512sums="febecef9ad5eaffdb32618bca68bdd3f0121ec34a436c8b0a82a8bc4d18f4b860771bb9ab8a1b3b22a30bf915b3a9ccba491c9c3c6b51537ef5510ef2dd953b3  libpbnjson-2.9.1.tar.gz
-1a62bbb30fabbf7e97fdc64ff278a67cd24f353bcbb4c003580463d4537b5ca5bccd98a90f1787168f273a503f4fab5b2e92d3020fc2507e8fbb6e071b5d2e2e  replace-bash-with-sh.patch"
+1e434f7deeb11b6a03d8831289b7c60d54576a75eaac9e30dc990f0bf08debfc6f5dd45c722737f1d44b0b60d81553456a013deba03efe2c3962bbacd0da25d9  replace-bash-with-sh.patch"

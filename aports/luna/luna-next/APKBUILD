@@ -1,6 +1,6 @@
 pkgname=luna-next
-pkgver=2.6.0
-pkgrel=2.6.0_git20170922
+pkgver=2.6.0_git20170922
+pkgrel=0
 _commit=428a337f922691b00534f041193ee7dca8defcc2
 pkgdesc="The new webOS UI of the webOS ports project."
 arch="all"
@@ -33,6 +33,6 @@ package() {
 	cd "$srcdir"/build
 	make DESTDIR="$pkgdir" install
 }
-sha512sums="37147471d8ea99321558aa8a824a76a6bc23d85cea666ea2c789585e7d398e46312da7488f2019826912addd28ae796552438f9a103ac6fec6572407ce6efb9b  luna-next-2.6.0.tar.gz
+sha512sums="37147471d8ea99321558aa8a824a76a6bc23d85cea666ea2c789585e7d398e46312da7488f2019826912addd28ae796552438f9a103ac6fec6572407ce6efb9b  luna-next-2.6.0_git20170922.tar.gz
 f6dc58db48bdd1ec4126245aaeb3cf364dfb761cf0aae172ff19eda885fe0601c249fcfc5e89c1cbfb91e857d5c57bac24495bab62a4c03dff7711e7dad2a9f8  remove-systemd-harddep.patch
 f749ed8a4b2ebd2f8baea6772888772cd9769a71fab667c6bb76338324a4692a9adaa3f6aae04199af74286d00b045c3c7c9cc0c57a293b8fdf04e5af75dca71  compile.patch"

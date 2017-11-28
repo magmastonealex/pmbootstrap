@@ -1,6 +1,6 @@
 pkgname=luna-sysmgr-ipc
-pkgver=2.0.0
-pkgrel=2.0.0_git20121029
+pkgver=2.0.0_git20121029
+pkgrel=0
 _commit=b51360839d2241717eae5fe8f9d360f68da267db
 pkgdesc="Provides headers for the IPC library used by luna-sysmgr"
 arch="all"
