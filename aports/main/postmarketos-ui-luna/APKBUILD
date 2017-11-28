@@ -15,4 +15,4 @@ package() {
 	install -D -m755 "$srcdir"/start_luna.sh \
 		"$pkgdir"/usr/bin/start_luna.sh
 }
-sha512sums="39f88a29e97d4bc29e24b4e2d839cf5320439113905fbb4789c3e72371d3bb5995a02374948b68087e44e7fe8e13a5baf408800fbc3eabe3666614510b9831e8  start_luna.sh"
+sha512sums="f9940d2ce21a3f0de682ee1046681b25ceeaccbcd72d92b1a791ea70074c1bf9f63d43ca36be069551f73ff8bf75585053f1fbe9a0669c481ebed26b5e9098a1  start_luna.sh"

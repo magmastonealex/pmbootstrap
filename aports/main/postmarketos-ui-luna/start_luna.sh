@@ -1,3 +1,5 @@
+#!/bin/sh
+
 if test -z "${XDG_RUNTIME_DIR}"; then
 	export XDG_RUNTIME_DIR=/tmp/$(id -u)-runtime-dir
 	if ! test -d "${XDG_RUNTIME_DIR}"; then
@@ -8,7 +10,7 @@ if test -z "${XDG_RUNTIME_DIR}"; then
 	export LD_PRELOAD=/usr/lib/libwayland-server.so.0
 	export QT_QPA_PLATFORM=eglfs
 	export QT_QUICK_BACKEND=software
-	
+
 	/usr/sbin/ls-hubd --conf /etc/luna-service2/ls-private.conf &
 	sleep 1
 	/usr/sbin/ls-hubd --public --conf /etc/luna-service2/ls-public.conf &
