@@ -22,6 +22,11 @@ package() {
 	cd "$srcdir"
 	install -d "$pkgdir"/usr/bin/
 	install -m 0755 lemon "$pkgdir"/usr/bin/
+
+	# FIXME: lempar.c should not be in /usr/bin/! Consider upstreaming a
+	# patch into sqlite, that makes lemon look for it in /usr/share/lemon:
+	# <https://aur.archlinux.org/cgit/aur.git/tree/lemon_share.diff?h=lemon>
+
 	install -m 0644 "$srcdir"/lempar-$pkgver.c "$pkgdir"/usr/bin/lempar.c
 }
 sha512sums="17c5210e856a6eeb195b9c8c68b83407b7085596dd48e8e55059d644725ff84fb56a5cf223530723b9a69382f619383b4035fe46588300e2e5776228429ec5d4  lemon-3.21.c
