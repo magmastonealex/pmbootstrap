@@ -1,11 +1,11 @@
 pkgname=postmarketos-ui-luna
 pkgver=1
-pkgrel=0
+pkgrel=4
 pkgdesc="(Wayland) webOS UI, ported from the LuneOS project (Not working yet)"
 url="https://wiki.postmarketos.org/wiki/LuneOS_UI"
 arch="noarch"
 license="GPL3+"
-depends="luna-next-cardshell luna-next luna-sysmgr luna-sysservice luna-appmanager luneos-components luna-init mesa"
+depends="luna-next-cardshell luna-next luna-sysmgr luna-sysservice luna-appmanager luneos-components luna-init mesa db8 luna-webappmanager configurator activitymanager enyo luna-firstuse luna-systemui luna-qml-launcher luna-applauncher mojoloader luna-temp-ofono-bluetooth luna-app-services xkeyboard-config luna-core-apps luna-app-browser"
 makedepends=""
 subpackages=""
 source="start_luna.sh"
