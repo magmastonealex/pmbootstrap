@@ -4,7 +4,7 @@ pkgname=qt5-qtwebchannel
 _pkgname=${pkgname/qt5-//}-opensource-src
 pkgver=9999
 _pkgver=5.9.3
-_ver=${pkgver/_/-}
+_ver=${_pkgver/_/-}
 _ver=${_ver/beta0/beta}
 _ver=${_ver/rc0/rc}
 _V=${_ver/rc/RC}
@@ -18,11 +18,11 @@ depends="qt5-qtdeclarative qt5-qtquickcontrols2-dev"
 makedepends="qt5-qtbase-dev qt5-websockets-dev qt5-qtdeclarative-dev qt5-qtquickcontrols2-dev"
 subpackages="$pkgname-dev"
 
-case $pkgver in
+case $_pkgver in
 *_beta*|*_rc*) _rel=development_releases;;
 *) _rel=official_releases;;
 esac
-source="http://download.qt-project.org/$_rel/qt/${pkgver%.*}/$_ver/submodules/$_pkgname-$_V.tar.xz"
+source="http://download.qt-project.org/$_rel/qt/${_pkgver%.*}/$_ver/submodules/$_pkgname-$_V.tar.xz"
 
 builddir="$srcdir"/$_pkgname-${_V%-*}
 
