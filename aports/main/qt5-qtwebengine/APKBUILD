@@ -9,62 +9,65 @@ depends="qt5-qtbase qt5-qtquickcontrols2 python2 fontconfig dbus-x11 libcap libd
 makedepends="qt5-qtbase-dev qt5-qtquickcontrols2-dev python2-dev bison flex gperf fontconfig-dev mesa-dev libcap-dev libdrm-dev libxcomposite-dev libxcursor-dev libxi-dev libxrandr-dev libxscrnsaver-dev libxtst-dev alsa-lib-dev ffmpeg-dev ffmpeg-libs jsoncpp-dev ninja libwebp-dev opus-dev icu-dev libevent-dev bsd-compat-headers libexecinfo-dev git qt5-qtwebchannel-dev libjpeg-turbo-dev gzip libintl gettext-dev yasm dbus-dev libpbnjson-dev luna-service2-dev"
 builddir="$srcdir/${pkgname/qt5-/}-opensource-src-$pkgver"
 source="http://download.qt.io/official_releases/qt/${pkgver%.*}/${pkgver}/submodules/${pkgname/qt5-/}-opensource-src-$pkgver.tar.xz
-0001-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch
-0001-functions.prf-allow-build-for-linux-oe-g-platform.patch
-0002-chromium-Force-host-toolchain-configuration.patch
-0002-WebEngine-qquickwebengineview_p_p.h-add-include-QCol.patch
-0003-chromium-workaround-for-too-long-.rps-file-name.patch
-0003-Include-dependency-to-QCoreApplication-translate.patch
-0004-chromium-musl-sandbox-Define-TEMP_FAILURE_RETRY-if-n.patch
-0005-chromium-musl-Avoid-mallinfo-APIs-on-non-glibc-linux.patch
-0006-chromium-musl-include-fcntl.h-for-loff_t.patch
-0007-chromium-musl-use-off64_t-instead-of-the-internal-__.patch
-0008-chromium-musl-linux-glibc-make-the-distinction.patch
-0009-chromium-musl-allocator-Do-not-include-glibc_weak_sy.patch
-0010-chromium-musl-Use-correct-member-name-__si_fields-fr.patch
-0011-chromium-musl-Match-syscalls-to-match-musl.patch
-0012-chromium-musl-Define-res_ninit-and-res_nclose-for-no.patch
-0013-chromium-musl-Do-not-define-__sbrk-on-musl.patch
-0014-chromium-musl-Adjust-default-pthread-stack-size.patch
-0015-chromium-musl-include-asm-generic-ioctl.h-for-TCGETS.patch
-0016-chromium-musl-tcmalloc-Use-off64_t-insread-of-__off6.patch
-gn_bootstrap.patch
-no_execinfo.patch
-yasm_intl.patch
+patches-musl/0001-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch
+patches-musl/0001-functions.prf-allow-build-for-linux-oe-g-platform.patch
+patches-musl/0002-chromium-Force-host-toolchain-configuration.patch
+patches-musl/0002-WebEngine-qquickwebengineview_p_p.h-add-include-QCol.patch
+patches-musl/0003-chromium-workaround-for-too-long-.rps-file-name.patch
+patches-musl/0003-Include-dependency-to-QCoreApplication-translate.patch
+patches-musl/0004-chromium-musl-sandbox-Define-TEMP_FAILURE_RETRY-if-n.patch
+patches-musl/0005-chromium-musl-Avoid-mallinfo-APIs-on-non-glibc-linux.patch
+patches-musl/0006-chromium-musl-include-fcntl.h-for-loff_t.patch
+patches-musl/0007-chromium-musl-use-off64_t-instead-of-the-internal-__.patch
+patches-musl/0008-chromium-musl-linux-glibc-make-the-distinction.patch
+patches-musl/0009-chromium-musl-allocator-Do-not-include-glibc_weak_sy.patch
+patches-musl/0010-chromium-musl-Use-correct-member-name-__si_fields-fr.patch
+patches-musl/0011-chromium-musl-Match-syscalls-to-match-musl.patch
+patches-musl/0012-chromium-musl-Define-res_ninit-and-res_nclose-for-no.patch
+patches-musl/0013-chromium-musl-Do-not-define-__sbrk-on-musl.patch
+patches-musl/0014-chromium-musl-Adjust-default-pthread-stack-size.patch
+patches-musl/0015-chromium-musl-include-asm-generic-ioctl.h-for-TCGETS.patch
+patches-musl/0016-chromium-musl-tcmalloc-Use-off64_t-insread-of-__off6.patch
+patches-musl/gn_bootstrap.patch
+patches-musl/no_execinfo.patch
+patches-musl/yasm_intl.patch
+patches-musl/renderthread-mallinfo.patch
+patches-musl/no-pvalloc.patch
 use-ozone.patch
-renderthread-mallinfo.patch
-no-pvalloc.patch
-0001-Add-PalmServiceBridge-to-WebEngine.patch
-0002-PalmServiceBridge-adapt-to-Chromium-53-code-base.patch
-0003-WebContents-provide-additional-features-from-window..patch
-0004-Store-the-additional-window-features-related-to-Lune.patch
-0005-WindowFeatures-Chrome-lower-the-minimum-height-to-5.patch
-0006-Enable-password-echo.patch
-0007-storage-browser-quota-workaround-for-crash-on-cache-.patch
-0008-html.css-themeWin.css-Add-Prelude-as-default-font-in.patch
-0010-Update-additional-params-from-Chromium-53-56.patch
-0011-Fix-WebGL2-Textures.patch
-0002-WebEngineView-provide-additionnal-features-from-wind.patch
-0003-WebEngineNewViewRequest-provide-the-requested-URL-as.patch
-0004-Implement-Sync-IPC-messaging-through-qt.webChannelTr.patch
-0005-Make-properties-for-some-settings-for-PalmBridgeServ.patch
-0006-WebEngineSettings-Add-a-standardFontFamily-property-.patch
-0007-WebEngineSettings-add-also-Serif-Fixed-and-Cursive-f.patch
-0008-Store-the-additional-window-features-required-by-the.patch
-0009-QQuickWebEngineNewViewRequest-use-initialTargetUrl-f.patch
-0010-WebEngineNewViewRequest-add-possibility-to-get-reque.patch
-0011-GetScreenInfo-use-default-screen-when-no-window-is-a.patch
-0012-Enable-password-echo.patch
-0013-Implement-RequestQuotePermission.patch
-0014-WebEngineView-re-introduce-devicePixelRatio-property.patch
-0015-WebEngineView-add-extraContextMenuEntriesComponent-p.patch
-0016-Fix-build-for-Qt5.9.patch
-0017-gn_generator-fix-debug-build.patch
-0018-Add-LuneOS-specific-switches.patch
+patches-luna/0001-Add-PalmServiceBridge-to-WebEngine.patch
+patches-luna/0002-PalmServiceBridge-adapt-to-Chromium-53-code-base.patch
+patches-luna/0003-WebContents-provide-additional-features-from-window..patch
+patches-luna/0004-Store-the-additional-window-features-related-to-Lune.patch
+patches-luna/0005-WindowFeatures-Chrome-lower-the-minimum-height-to-5.patch
+patches-luna/0006-Enable-password-echo.patch
+patches-luna/0007-storage-browser-quota-workaround-for-crash-on-cache-.patch
+patches-luna/0008-html.css-themeWin.css-Add-Prelude-as-default-font-in.patch
+patches-luna/0010-Update-additional-params-from-Chromium-53-56.patch
+patches-luna/0011-Fix-WebGL2-Textures.patch
+patches-luna/0002-WebEngineView-provide-additionnal-features-from-wind.patch
+patches-luna/0003-WebEngineNewViewRequest-provide-the-requested-URL-as.patch
+patches-luna/0004-Implement-Sync-IPC-messaging-through-qt.webChannelTr.patch
+patches-luna/0005-Make-properties-for-some-settings-for-PalmBridgeServ.patch
+patches-luna/0006-WebEngineSettings-Add-a-standardFontFamily-property-.patch
+patches-luna/0007-WebEngineSettings-add-also-Serif-Fixed-and-Cursive-f.patch
+patches-luna/0008-Store-the-additional-window-features-required-by-the.patch
+patches-luna/0009-QQuickWebEngineNewViewRequest-use-initialTargetUrl-f.patch
+patches-luna/0010-WebEngineNewViewRequest-add-possibility-to-get-reque.patch
+patches-luna/0011-GetScreenInfo-use-default-screen-when-no-window-is-a.patch
+patches-luna/0012-Enable-password-echo.patch
+patches-luna/0013-Implement-RequestQuotePermission.patch
+patches-luna/0014-WebEngineView-re-introduce-devicePixelRatio-property.patch
+patches-luna/0015-WebEngineView-add-extraContextMenuEntriesComponent-p.patch
+patches-luna/0016-Fix-build-for-Qt5.9.patch
+patches-luna/0017-gn_generator-fix-debug-build.patch
+patches-luna/0018-Add-LuneOS-specific-switches.patch
 "
 subpackages="$pkgname-dev $pkgname-doc"
 
 prepare() {
+	for i in "$startdir"/patches*; do
+		ln -sv "$i" "$srcdir/$(basename "$i")"
+	done
 	default_prepare
 	mkdir -p "$srcdir"/build
 }
@@ -112,9 +115,9 @@ ebff27bc19476fad4cbbb619d74bb0cc9d63cf82245dc5c53352df423aa7096844e1b0ee8156d777
 07ef6db227cf80683960a4e00e307980bd7b911ca4614d477a77b318a2e2d649cb39563b1f9feb3abea78d6d603d88762160c52f83f4204f90512bf6efb685d9  gn_bootstrap.patch
 45919a5e90db8e32d5a5c121a49927652f726cc4206e1e7af830376e634769012162cb8915b9acde7971d111b095496c50b9c69ca32a41bf09ca0cab66bef88a  no_execinfo.patch
 f6c17aa2c8136ca13b51d0b3819435819bcaaf65ea42b6d66460ae08e14a0d75560d938480dfe07ea07f146384476cfa86674921eabd6ab8a3d691d2b93ed0fc  yasm_intl.patch
-9ff66a603807aec4ebc5df7d94155b2c8085039c69a79bd90553b5bedc6799dd7898fd856998a02f6deb15772a657cc06aa4d97b55f6a3665061027f624881ea  use-ozone.patch
 ca12618013458ebabc4f84b7458fb0a58629aebca8745ffe96122131fadfa72b17c9351a4b35a4542cd2132b5dbba4fb3b60b52e3c47a853f87eec7c22e9aea2  renderthread-mallinfo.patch
 bfa7c934c8c300d706cf36e9584a3411f814d1764af928603f55c0e14c9bfef95dd7c357ac686d72d29d46224b782a9e86870acdb140f4eeeb79a4a60f976656  no-pvalloc.patch
+9ff66a603807aec4ebc5df7d94155b2c8085039c69a79bd90553b5bedc6799dd7898fd856998a02f6deb15772a657cc06aa4d97b55f6a3665061027f624881ea  use-ozone.patch
 9efad8cc7be70f0687ffee585b3e943c76e576d8121a14c79a16e96586301cfd464056bea1bfc58298f7eaa89839af5af5c5f5d629843ad2182d27820d496043  0001-Add-PalmServiceBridge-to-WebEngine.patch
 64443e6e078744803ebf34adbb3cbe8cf0ad1becbbfafefc1f882cb12ee71ff401ced826a509f91b151cb739ef9947b6cc6f39c278bb8f6418a8396fe7d8968c  0002-PalmServiceBridge-adapt-to-Chromium-53-code-base.patch
 8eca1df605f5ef69883b03135058306f877615a7d64802be016a747e784984a27121d88e38583d0ff22d514c2e655bafc1fdefc24ff4829741fab9d3b632ee4f  0003-WebContents-provide-additional-features-from-window..patch

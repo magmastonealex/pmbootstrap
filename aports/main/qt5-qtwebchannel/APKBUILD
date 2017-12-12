@@ -1,5 +1,3 @@
-# Contributor: Francesco Colista <fcolista@alpinelinux.org>
-# Maintainer: Francesco Colista <fcolista@alpinelinux.org>
 pkgname=qt5-qtwebchannel
 _pkgname=${pkgname/qt5-//}-opensource-src
 pkgver=9999
