@@ -1,5 +1,5 @@
 pkgname=libwebos-application
-pkgver=0.0.1
+pkgver=3.0.0_git20140327
 pkgrel=0
 _commit=8d5ce985fec7a9fc5b514be306a74193b6139f5b
 pkgdesc="Implements lifecycle support for native webOS applications"

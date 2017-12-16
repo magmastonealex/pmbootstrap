@@ -1,6 +1,6 @@
 pkgname=luna-service2
 pkgver=3.2.0_git20170505
-pkgrel=2
+pkgrel=1
 _commit=1e2e1a53c089003da333609946dddf063244ee34
 pkgdesc="Open webOS Luna System Bus library, daemon, and utilities"
 arch="all"

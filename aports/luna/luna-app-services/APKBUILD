@@ -4,11 +4,11 @@ pkgrel=1
 _commit=9cbee99870d0edba0b30cb569514be16ccf1999c
 pkgdesc="Services used by coreapps."
 arch="all"
-url="https://github.com/webOS-ports/activitymanager"
+url="https://github.com/webOS-ports/app-services"
 license="GPL-3.0+"
 depends="mojoservicelauncher"
 makedepends=""
-source="$pkgname-$pkgver.tar.gz::https://github.com/webOS-ports/app-services/archive/$_commit.tar.gz"
+source="$pkgname-$_commit.tar.gz::https://github.com/webOS-ports/app-services/archive/$_commit.tar.gz"
 options="!check"
 builddir="$srcdir/app-services-$_commit"
 
@@ -86,4 +86,4 @@ package() {
 
 
 }
-sha512sums="0ff50759de3c52546bad213be544771f821a0c4fa6fe20a4953693510ebde2b3897f9e1bcb7026e5c7e36de080fa600863faa170d206f93447ad50efd6f99105  luna-app-services-4.0.0_git20160804.tar.gz"
+sha512sums="0ff50759de3c52546bad213be544771f821a0c4fa6fe20a4953693510ebde2b3897f9e1bcb7026e5c7e36de080fa600863faa170d206f93447ad50efd6f99105  luna-app-services-9cbee99870d0edba0b30cb569514be16ccf1999c.tar.gz"
