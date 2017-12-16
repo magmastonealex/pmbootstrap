@@ -14,13 +14,8 @@ fix-qtwebengine-private-includes.patch
 tryFix.patch"
 builddir="$srcdir/$pkgname-$_commit"
 
-prepare() {
-	default_prepare
-	#cmake does not allow in-source builds
-	mkdir -p "$srcdir"/build
-}
-
 build() {
+	mkdir -p "$srcdir"/build
 	cd "$srcdir"/build
 	cmake "$builddir" \
 		-DCMAKE_BUILD_TYPE=Release \

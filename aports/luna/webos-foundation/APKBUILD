@@ -11,10 +11,6 @@ makedepends=""
 source="$pkgname-$_commit.tar.gz::https://github.com/webos-ports/foundation-frameworks/archive/$_commit.tar.gz"
 builddir="$srcdir/foundation-frameworks-$_commit"
 
-build() {
-	return 0
-}
-
 package() {
 	cd "$builddir"
 

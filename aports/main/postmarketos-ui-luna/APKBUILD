@@ -5,7 +5,29 @@ pkgdesc="(Wayland) webOS UI, ported from the LuneOS project (Not working yet)"
 url="https://wiki.postmarketos.org/wiki/LuneOS_UI"
 arch="noarch"
 license="GPL3+"
-depends="luna-next-cardshell luna-next luna-sysmgr luna-sysservice luna-appmanager luneos-components luna-init mesa db8 luna-webappmanager configurator activitymanager enyo luna-firstuse luna-systemui luna-qml-launcher luna-applauncher mojoloader luna-temp-ofono-bluetooth luna-app-services xkeyboard-config luna-core-apps luna-app-browser"
+depends="activitymanager
+configurator
+db8
+enyo
+luna-app-browser
+luna-app-services
+luna-applauncher
+luna-appmanager
+luna-core-apps
+luna-firstuse
+luna-init
+luna-next
+luna-next-cardshell
+luna-qml-launcher
+luna-sysmgr
+luna-sysservice
+luna-systemui
+luna-temp-ofono-bluetooth
+luna-webappmanager
+luneos-components
+mesa
+mojoloader
+xkeyboard-config"
 makedepends=""
 subpackages=""
 source="start_luna.sh"
@@ -15,4 +37,4 @@ package() {
 	install -D -m755 "$srcdir"/start_luna.sh \
 		"$pkgdir"/usr/bin/start_luna.sh
 }
-sha512sums="73e9168118ba62a910acfbff47a36cdf55a6c778607777073f314b4baada6a4f6434d6ab6a79fecd57385699647f7e33fdb80e6b2c9a62b21817db5f15b879f6  start_luna.sh"
+sha512sums="a0e9018ceaabb4da16bac70b7b4aa704924a483e166f3f04df6b46a98b449798b8bafb851154ca1bf14438da3381699434933d4f0866dc680fe52fd6a7dd5bd6  start_luna.sh"

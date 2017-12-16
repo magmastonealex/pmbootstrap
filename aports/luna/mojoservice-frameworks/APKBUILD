@@ -11,17 +11,13 @@ makedepends=""
 source="$pkgname-$_commit.tar.gz::https://github.com/webos-ports/mojoservice-frameworks/archive/$_commit.tar.gz"
 builddir="$srcdir/mojoservice-frameworks-$_commit"
 
-build() {
-	return 0
-}
-
 package() {
 	cd "$builddir"
 
 	install -d "$pkgdir"/usr/palm/frameworks
 
-	for FRAMEWORK in `ls -d1 ./mojoservice*` ; do
-		FRAMEWORK_DIR=`basename $FRAMEWORK`
+	for FRAMEWORK in $(ls -d1 ./mojoservice*); do
+		FRAMEWORK_DIR=$(basename $FRAMEWORK)
 		install -d "$pkgdir"/usr/palm/frameworks/$FRAMEWORK_DIR/version/1.0/
 		cp -vrf $FRAMEWORK/* "$pkgdir"/usr/palm/frameworks/$FRAMEWORK_DIR/version/1.0/
 		# remove test and jasminetest dirs

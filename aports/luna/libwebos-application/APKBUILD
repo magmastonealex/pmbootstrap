@@ -13,12 +13,8 @@ options="!check"
 subpackages="$pkgname-dev"
 builddir="$srcdir/$pkgname-$_commit"
 
-prepare() {
-	default_prepare
-	mkdir -p "$srcdir"/build
-}
-
 build() {
+	mkdir -p "$srcdir"/build
 	cd "$srcdir"/build
 	cmake "$builddir" \
 		-DCMAKE_BUILD_TYPE=Release \

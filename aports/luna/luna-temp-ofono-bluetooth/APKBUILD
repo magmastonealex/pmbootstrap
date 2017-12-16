@@ -11,10 +11,6 @@ makedepends=""
 source="luneos-components-$_commit.tar.gz::https://github.com/webOS-ports/luneos-components/archive/$_commit.tar.gz"
 builddir="$srcdir/luneos-components-$_commit"
 
-build() {
-	return 0;
-}
-
 package() {
 	cd "$builddir"
 	install -d "$pkgdir"/usr/lib/qt5/qml/LuneOS

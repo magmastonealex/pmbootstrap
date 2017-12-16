@@ -8,7 +8,7 @@ url="https://github.com/webOS-ports/nodejs-module-webos-pmlog"
 license="GPL-3.0+"
 depends="pmloglib nodejs nodejs-npm"
 
-#vim is in makedepends because it provides xxd
+# vim is in makedepends because it provides xxd
 makedepends="cmake-modules-webos pmloglib-dev nodejs-dev vim python"
 source="$pkgname-$pkgver.tar.gz::https://github.com/webOS-ports/nodejs-module-webos-pmlog/archive/$_commit.tar.gz"
 options="!check"

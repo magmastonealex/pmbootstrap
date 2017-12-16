@@ -12,15 +12,6 @@ source="$pkgname-$_commit.tar.gz::https://github.com/webOS-ports/app-services/ar
 options="!check"
 builddir="$srcdir/app-services-$_commit"
 
-prepare() {
-	default_prepare
-	mkdir -p "$srcdir"/build
-}
-
-build() {
-	return 0
-}
-
 package() {
 	cd "$builddir"
 	install -d "$pkgdir"/usr/palm/services
@@ -49,8 +40,8 @@ package() {
 	install -d "$pkgdir"/etc/palm/event.d
 	install -d "$pkgdir"/etc/palm/init
 
-    for SERVICE in `ls -d1 ./com.palm.service.*` ; do
-        SERVICE_DIR=`basename $SERVICE`
+    for SERVICE in $(ls -d1 ./com.palm.service.*); do
+        SERVICE_DIR=$(basename $SERVICE)
         install -d "$pkgdir"/usr/palm/services/$SERVICE_DIR/
         cp -vrf $SERVICE/* "$pkgdir"/usr/palm/services/$SERVICE_DIR/
         # Copy db8 kinds, permissions and activities
@@ -83,7 +74,5 @@ package() {
 
 	# create folder for contact linker plugins
 	mkdir -p "$pkgdir"/etc/palm/contact_linker_plugins
-
-
 }
 sha512sums="0ff50759de3c52546bad213be544771f821a0c4fa6fe20a4953693510ebde2b3897f9e1bcb7026e5c7e36de080fa600863faa170d206f93447ad50efd6f99105  luna-app-services-9cbee99870d0edba0b30cb569514be16ccf1999c.tar.gz"
