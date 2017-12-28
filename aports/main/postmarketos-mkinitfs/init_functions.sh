@@ -54,6 +54,7 @@ mount_subpartitions() {
 				if blkid | grep -q "pmOS_boot"; then
 					break
 				fi
+				kpartx -d "$i"
 				continue
 				;;
 			*)

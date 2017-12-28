@@ -9,7 +9,7 @@ url="https://postmarketos.org"
 license="MIT"
 arch="noarch"
 options="!check"
-depends="linux-teclast-x80pro firmware-teclast-x80pro"
+depends="linux-teclast-x80pro linux-firmware"
 makedepends="devicepkg-dev"
 source="deviceinfo"
 
