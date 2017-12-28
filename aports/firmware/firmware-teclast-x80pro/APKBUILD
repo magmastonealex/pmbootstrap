@@ -1,0 +1,22 @@
+pkgname=firmware-teclast-x80pro
+pkgver=1
+pkgrel=0
+pkgdesc="Teclast X80 Pro Firmware"
+url="https://github.com/hadess/rtl8723bs"
+arch="noarch"
+license="proprietary"
+options="!check !strip"
+
+# Source
+_commit="cc77e7b6092c54500058cd027b679421b9399905"
+source=$pkgname-$_commit.tar.gz::$url"/archive/${_commit}.tar.gz"
+
+package() {
+	cd "$srcdir/rtl8723bs-${_commit}"
+
+	# Wifi
+	install -Dm644 "rtl8723bs_nic.bin" \
+		"$pkgdir/lib/firmware/rtlwifi/rtl8723bs_nic.bin"
+}
+
+sha512sums="8b763553f9e79f6baf96a3c5262018cedbd13f59b6196d106e9cb5eb6a2c0fac3c550bc065c5f41a3ba75e8ef11501228f9d1a0fe992d628c293dd57fa725573  firmware-teclast-x80pro-cc77e7b6092c54500058cd027b679421b9399905.tar.gz"

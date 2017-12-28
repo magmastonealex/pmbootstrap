@@ -48,7 +48,13 @@ mount_subpartitions() {
 			2)
 				echo "Mount subpartitions of $i"
 				kpartx -afs "$i"
-				break
+				# Ensure that this was the *correct* subpartition
+				# Some devices have mmc partitions that appear to have
+				# subpartitions, but aren't our subpartition.
+				if blkid | grep -q "pmOS_boot"; then
+					break
+				fi
+				continue
 				;;
 			*)
 				continue
